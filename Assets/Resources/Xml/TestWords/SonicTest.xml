@@ -1,3 +1,4 @@
+<!--Note that this one's used for unit tests, so keep that in mind when modifying.-->
 <WordRoot>
   <BaseWord word="Sonic">
     <LinkedWords>
@@ -18,7 +19,7 @@
       <Link word="cool" weight="1.0"/>
       <Link word="funny" weight="0.5"/>
     </Descriptors>
-    <UnderstandingBase>0.2</UnderstandingBase>
+    <UnderstandingBase>0</UnderstandingBase>
     <UnderstoodByDadType>0</UnderstoodByDadType>
   </BaseWord>
 </WordRoot>

@@ -1,0 +1,12 @@
+<!--These are all words that can be pulled for any word, and dad understands them all.-->
+<!--Note that these are used for unit tests, so keep that in mind while editing.-->
+<WordRoot>
+  <BaseWord word="_FakeWords">
+    <LinkedWords>
+      <Link word="baseball" weight="0"/>
+      <Link word="dog" weight="0"/>
+      <Link word="beer" weight="0"/>
+      <Link word="sports" weight="0"/>
+    </LinkedWords>
+  </BaseWord>
+</WordRoot>

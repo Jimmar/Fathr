@@ -1,0 +1,20 @@
+<!--Note that this one's used for unit tests, so keep that in mind when modifying.-->
+<WordRoot>
+  <BaseWord word="Mario">
+    <LinkedWords>
+      <Link word="video game" weight="1.0"/>
+      <Link word="red" weight="1.0"/>
+      <Link word="platformer" weight="1.0"/>
+      <Link word="Nintendo" weight="0.8"/>
+      <Link word="mushrooms" weight="0.8"/>
+      <Link word="mustache" weight="0.8"/>
+      <Link word="Sonic" weight="0.3"/>
+    </LinkedWords>
+    <Descriptors>
+      <Link word="fun" weight="1.0"/>
+      <Link word="nostalgic" weight="0.8"/>
+    </Descriptors>
+    <UnderstandingBase>0.5</UnderstandingBase>
+    <UnderstoodByDadType>0</UnderstoodByDadType>
+  </BaseWord>
+</WordRoot>

@@ -1,0 +1,7 @@
+<!--Note that this one's used for unit tests, so keep that in mind when modifying.-->
+<WordRoot>
+  <BaseWord word="video game">
+    <UnderstandingBase>0.5</UnderstandingBase>
+    <UnderstoodByDadType>0</UnderstoodByDadType>
+  </BaseWord>
+</WordRoot>

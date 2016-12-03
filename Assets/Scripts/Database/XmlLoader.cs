@@ -19,7 +19,7 @@ using System.Xml.Linq;
         /// <param name="serializableObject">Object to output.</param>
         public static void SaveXml<T>(string xmlPath, T serializableObject)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            XmlSerializerWithCallback serializer = new XmlSerializerWithCallback(typeof(T));
             using (FileStream fileStream = new FileStream(xmlPath, FileMode.Create)) {
                 serializer.Serialize(fileStream, serializableObject);
             }
@@ -33,7 +33,7 @@ using System.Xml.Linq;
         /// <returns>The loaded object, or null if not present.</returns>
         public static T LoadXml<T>(string xmlPath)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            XmlSerializerWithCallback serializer = new XmlSerializerWithCallback(typeof(T));
             using (FileStream fileStream = new FileStream(xmlPath, FileMode.Open)) {
                 T deserialized = (T) serializer.Deserialize(fileStream);
                 return deserialized;
@@ -51,7 +51,7 @@ using System.Xml.Linq;
         public static IList<T> LoadSubXml<T>(string xmlPath, string elementNameToLimitTo)
         {
             XElement root = XElement.Load(xmlPath);
-            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            XmlSerializerWithCallback serializer = new XmlSerializerWithCallback(typeof(T));
             List<XElement> limitedElements = new List<XElement>();
             List<T> loadedElements = new List<T>();
             Queue<XElement> elementsToCheck = new Queue<XElement>();
@@ -76,5 +76,42 @@ using System.Xml.Linq;
             }
             return loadedElements;
         }
+
+        /// <summary>
+        /// XML deserialization doesn't allow for a callback on deserialization completing, so inject one manually.
+        /// Use IWantXmlDeserializationCallback to opt into receiving this callback.
+        /// </summary>
+        private class XmlSerializerWithCallback : XmlSerializer
+        {
+            /// <summary>
+            /// Initializes a new instance of the XmlSerializer class that can serialize objects of the specified type into XML documents, and deserialize XML documents into objects of the specified type.
+            /// Provides an optional callback when deserialization completes.
+            /// </summary>
+            /// <param name="targetType">Target type.</param>
+            public XmlSerializerWithCallback(System.Type targetType) :
+                base(targetType)
+            { }
+
+            protected override object Deserialize(XmlSerializationReader reader)
+            {
+                var result = base.Deserialize(reader);
+                if (result is IWantXMLDeserializationCallback) {
+                    (result as IWantXMLDeserializationCallback).OnDeserialization(this);
+                }
+                return result;
+            }
+        }
+
+    }
+}
+
+namespace System.Xml.Serialization
+{
+    /// <summary>
+    /// Implement this to receive a callback upon deserialization completing, if going through XmlHandler.
+    /// </summary>
+    public interface IWantXMLDeserializationCallback
+    {
+        void OnDeserialization(object sender);
     }
 }

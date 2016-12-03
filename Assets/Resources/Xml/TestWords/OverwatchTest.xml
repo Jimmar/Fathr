@@ -1,0 +1,19 @@
+<!--Note that this one's used for unit tests, so keep that in mind when modifying.-->
+<WordRoot>
+  <BaseWord word="Overwatch">
+    <LinkedWords>
+      <Link word="video game" weight="1.0"/>
+      <Link word="guns" weight="1.0"/>
+      <Link word="teamwork" weight="1.0"/>
+      <Link word="FPS" weight="1.0"/>
+      <Link word="MOBA" weight="1.0"/>
+      <Link word="esport" weight="0.8"/>
+      <Link word="sports" weight="0.4"/>
+    </LinkedWords>
+    <Descriptors>
+      <Link word="cool" weight="1.0"/>
+    </Descriptors>
+    <UnderstandingBase>0</UnderstandingBase>
+    <UnderstoodByDadType>0</UnderstoodByDadType>
+  </BaseWord>
+</WordRoot>

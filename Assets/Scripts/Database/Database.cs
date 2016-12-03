@@ -1,10 +1,11 @@
 ﻿namespace database
 {
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Xml.Serialization;
-using UnityEngine;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Xml.Serialization;
+    using UnityEngine;
 
     /// <summary>
     /// The main word and image database. Handles loading in words and constructing the links between them.
@@ -14,14 +15,18 @@ using UnityEngine;
     {
         private const string wordFilesResourcesPath_c = "Xml/Words";
         private const string imageFilesResourcesPath_c = "Xml/Images";
-        private static readonly string imageFilesActualPath_c = Path.Combine(Application.dataPath, "Resources/" + imageFilesResourcesPath_c);
+
+        private string wordFilesResourcesPath;
+        private string imageFilesResourcesPath;
+        private string imageFilesActualPath { get { return Path.Combine(Application.dataPath, "Resources/" + imageFilesResourcesPath_c); } }
 
         private Dictionary<string, Word> wordDatabase;   // Keys are the words.
         private List<Image> imageDatabase;
+        private List<string> fakeWordDatabase; // Usable for all words.
 
         #region Member classes
         [XmlRoot("BaseWord")]
-        public class Word
+        public class Word : IWantXMLDeserializationCallback
         {
             [XmlAttribute("word")]
             public string word { get; private set; }
@@ -32,11 +37,17 @@ using UnityEngine;
             [XmlArrayItem("Link")]
             public List<LinkedWord> linkedDescriptors { get; private set; }
             [XmlElement("UnderstandingBase")]
-            public double understandingBase { get; private set; } // TODO: Default should be 1.
+            public double understanding { get; set; }
             [XmlElement("UnderstoodByDadType")]
             public short understoodByDadType { get; private set; }
+            /// <summary>Tracks understanding as it's changed for the current image, and then this is assigned to understanding.</summary>
+            public double understandingCurrent { get; set; }
 
             public Word() { } // Needed for serialization.
+
+            public void OnDeserialization(object sender) { // Nothing is deserialized in before construction, so initialize here.
+                this.understandingCurrent = this.understanding;
+            }
         }
 
         [XmlRoot("Image")]
@@ -44,6 +55,8 @@ using UnityEngine;
         {
             [XmlAttribute("fileName")]
             public string fileName { get; private set; }
+            [XmlIgnore]
+            public string filePath { get; set; } // Set manually.
             [XmlArray("LinkedWords")]
             [XmlArrayItem("Link")]
             public List<LinkedWord> linkedWords { get; private set; }
@@ -68,12 +81,19 @@ using UnityEngine;
         /// <summary>
         /// Call during regular game loading to prepare the words. This will also set the singleton instance.
         /// </summary>
-        public void Initialize()
+        /// <param name="wordDirPath"> Directory of the word files, relative to Resources. Set to null to use the default..</param>
+        /// <param name="imageDirPath">Directory of the image files, relative to Resources. Set to null to use the default..</param>
+        public void Initialize(string wordDirPath = null, string imageDirPath = null)
         {
             instance = this;
             this.wordDatabase = new Dictionary<string, Word>();
-            this.LoadXmlWords(Path.Combine(Application.dataPath, "Resources/" + wordFilesResourcesPath_c));
-            this.LoadXmlImages(Path.Combine(Application.dataPath, "Resources/" + imageFilesResourcesPath_c));
+            this.imageDatabase = new List<Image>();
+            this.fakeWordDatabase = new List<string>();
+            this.wordFilesResourcesPath = wordDirPath ?? wordFilesResourcesPath_c;
+            this.imageFilesResourcesPath = imageDirPath ?? imageFilesResourcesPath_c;
+
+            this.LoadXmlWords(Path.Combine(Application.dataPath, "Resources/" + this.wordFilesResourcesPath));
+            this.LoadXmlImages(Path.Combine(Application.dataPath, "Resources/" + this.imageFilesResourcesPath));
         }
 
         /// <summary>
@@ -88,7 +108,11 @@ using UnityEngine;
             {
                 IList<Word> wordsFromFile = database.XmlLoader.LoadSubXml<Word>(xmlFile.FullName, "BaseWord");
                 for (int i = 0; i < wordsFromFile.Count; i++) {
-                    this.wordDatabase.Add(wordsFromFile[i].word, wordsFromFile[i]);
+                    if (xmlFile.Name.Contains("_FakeWords")) {
+                        this.fakeWordDatabase.AddRange(wordsFromFile[i].linkedWords.Select(word => word.word));
+                    } else {
+                        this.wordDatabase.Add(wordsFromFile[i].word, wordsFromFile[i]);
+                    }
                 }
             }
         }
@@ -103,7 +127,7 @@ using UnityEngine;
             FileInfo[] xmlFiles = containingDirectoryInfo.GetFiles("*.xml");
             foreach (FileInfo xmlFile in xmlFiles)
             {
-                IList<Image> imagesFromFile = database.XmlLoader.LoadSubXml<Image>(xmlFile.FullName, "BaseImage");
+                IList<Image> imagesFromFile = database.XmlLoader.LoadSubXml<Image>(xmlFile.FullName, "Image");
                 for (int i = 0; i < imagesFromFile.Count; i++) {
                     this.imageDatabase.Add(imagesFromFile[i]);
                 }
@@ -115,25 +139,52 @@ using UnityEngine;
         /// <summary>
         /// Retrieves, unweighted, the words (including descriptors) that are linked to the specified targetWord. Use for setting the word bank, etc.
         /// </summary>
-        public IEnumerable<string> GetWordsLinkedTo(string targetWord)
+        public IEnumerable<string> GetWordsLinkedTo(string targetWord, int numFakeWords)
         {
             if (!this.wordDatabase.ContainsKey(targetWord)) {
                 throw new System.ArgumentException(string.Format("No word database entry for '{0}'!", targetWord));
             }
+            this.fakeWordDatabase.Shuffle();
             return this.wordDatabase[targetWord].linkedWords.Select(word => word.word).Concat(
-                this.wordDatabase[targetWord].linkedDescriptors.Select(word => word.word));
+                this.wordDatabase[targetWord].linkedDescriptors.Select(word => word.word)).Concat(
+                this.fakeWordDatabase.GetRange(0, numFakeWords));
         }
 
-        public Texture2D GetUnusedImage()
+        /// <summary>
+        /// Gets the info about a specified word.
+        /// </summary>
+        public Word GetWord(string targetWord)
+        {
+            if (!this.wordDatabase.ContainsKey(targetWord)) {
+                throw new System.ArgumentException(string.Format("No word database entry for '{0}'!", targetWord));
+            }
+            return this.wordDatabase[targetWord];
+        }
+        public bool TryGetWord(string targetWord, out Word word)
+        {
+            try {
+                word = this.GetWord(targetWord);
+                return true;
+            } catch {
+                word = null;
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Load in an unused image file. Will timeout if no unused images are found.
+        /// </summary>
+        public Image GetUnusedImage()
         {
             int timeout = 50;
             while (timeout > 0)
             {
-                Image image = this.imageDatabase[Random.Range(0, this.imageDatabase.Count)];
+                Image image = this.imageDatabase[random.Random.Range(0, this.imageDatabase.Count)];
                 if (!image.hasBeenUsedAlready)
                 {
                     image.hasBeenUsedAlready = true;
-                    return Resources.Load<Texture2D>(Path.Combine(imageFilesActualPath_c, image.fileName));
+                    image.filePath = Path.Combine(this.imageFilesResourcesPath, image.fileName);
+                    return image;
                 }
                 timeout--;
             }

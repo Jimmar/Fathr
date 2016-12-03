@@ -1,0 +1,13 @@
+<!--Note that this one's used for unit tests, so keep that in mind when modifying.-->
+<WordRoot>
+  <BaseWord word="sex">
+    <LinkedWords>
+      <Link word="porn" weight="1.0"/>
+    </LinkedWords>
+    <Descriptors>
+      <Link word="sex" weight="1.0"/>
+    </Descriptors>
+    <UnderstandingBase>1</UnderstandingBase>
+    <UnderstoodByDadType>0</UnderstoodByDadType>
+  </BaseWord>
+</WordRoot>

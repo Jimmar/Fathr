@@ -1,0 +1,28 @@
+<!--These are all words that can be pulled for any word, and dad understands them all.-->
+<WordRoot>
+  <BaseWord word="_FakeWords">
+    <LinkedWords>
+      <Link word="grapefruit" weight="0"/>
+      <Link word="sports" weight="0"/>
+      <Link word="dog" weight="0"/>
+      <Link word="beer" weight="0"/>
+      <Link word="baseball" weight="0"/>
+      <Link word="football" weight="0"/>
+      <Link word="giraffe" weight="0"/>
+      <Link word="cat" weight="0"/>
+      <Link word="orange" weight="0"/>
+      <Link word="red" weight="0"/>
+      <Link word="blue" weight="0"/>
+      <Link word="yellow" weight="0"/>
+      <Link word="purple" weight="0"/>
+      <Link word="green" weight="0"/>
+      <Link word="dark" weight="0"/>
+      <Link word="golf" weight="0"/>
+      <Link word="grilling" weight="0"/>
+      <Link word="Congress" weight="0"/>
+      <Link word="government" weight="0"/>
+      <Link word="American" weight="0"/>
+      <Link word="wholesome" weight="0"/>
+    </LinkedWords>
+  </BaseWord>
+</WordRoot>
