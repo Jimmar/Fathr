@@ -30,6 +30,7 @@ public class Game : MonoBehaviour
 
     public void Awake() // Awake so it can be used in Start elsewhere.
     {
+		instance = this;
         database.Database.Initialize();
         this.myScorer = new database.Scorer();
         database.DadResponder.Initialize();

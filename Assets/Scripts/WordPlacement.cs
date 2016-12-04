@@ -8,7 +8,7 @@ public class WordPlacement : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		myRect = GetComponent<RectTransform>().rect;
-		GenerateWords();
+		GenerateWords(tempWordList);
 	}
 	
 	// Update is called once per frame
@@ -16,10 +16,10 @@ public class WordPlacement : MonoBehaviour {
 				
 	}
 
-	public void GenerateWords(){
-		for (int i=0; i<tempWordList.Length;i++){
+	public void GenerateWords(string []words){
+		for (int i=0; i<words.Length;i++){
 			Transform newWordBlock = Instantiate(blockPrefab, transform.position, transform.rotation).transform;
-			newWordBlock.GetComponentInChildren<Text>().text = tempWordList[i];
+			newWordBlock.GetComponentInChildren<Text>().text = words[i];
 			Vector3 newPos = transform.position - new Vector3(Random.Range(myRect.position.x +70, -myRect.position.x-70), 
 										 					  Random.Range(myRect.position.y +50, -myRect.position.y-50),
 										 					  transform.position.z);
