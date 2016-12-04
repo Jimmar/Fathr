@@ -4,8 +4,8 @@
       <Link word="Anime" weight="1.0"/>
       <Link word="girl" weight="1.0"/>
       <Link word="magic" weight="1.0"/>
-      <Link word="cute" weight="0.8"/>
       <Link word="kawaii" weight="0.8"/>
+      <Link word="cute" weight="0.6"/>
       <Link word="cartoon" weight="0.5"/>
       <Link word="superhero" weight="0.5"/>
       <Link word="costume" weight="0.3"/>

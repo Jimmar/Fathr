@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Word = database.Database.Word;
 
 /// <summary>
 /// Main game stat object. Use this to track anything that would otherwise be a global.
@@ -9,7 +10,7 @@ public class Game : MonoBehaviour
 {
     public database.Database.Image currentImage = null;
     [HideInInspector]
-    public List<string> outstandingNotUnderstoodWords { get; set; }
+    public List<Word> outstandingNotUnderstoodWords { get; set; }
 
     public bool isGameOver { get { return this.confusion + this.understanding >= this.confunderstansionMaxValue; } }
 
@@ -31,7 +32,7 @@ public class Game : MonoBehaviour
     public void Awake() // Awake so it can be used in Start elsewhere.
     {
         instance = this;
-        this.outstandingNotUnderstoodWords = new List<string>();
+        this.outstandingNotUnderstoodWords = new List<Word>();
         database.Database.Initialize();
         this.myScorer = new database.Scorer();
         database.DadResponder.Initialize();

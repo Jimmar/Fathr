@@ -24,7 +24,7 @@ using System.Collections.Generic;
             // GOAL: The image has tags "Sonic" and "Overwatch," neither of which dad understands.
             Database.Image image = Database.Instance.GetUnusedImage(); // Assumes there's only one.
             this.scorer.ResetForNewImage();
-            List<string> unknownWords = new List<string>(new string[] { "Sonic", "Overwatch", "romance" });
+            List<Database.Word> unknownWords = new List<Database.Word>(new Database.Word[] { Database.Instance.GetWord("Sonic"), Database.Instance.GetWord("Overwatch"), Database.Instance.GetWord("romance") });
 
             List<string> first  = new List<string>(new string[] { "It's", "Sonic", "with", "Overwatch", "." });
             List<string> second = new List<string>(new string[] { "It's like", "Mario", "but", "blue", "." });
@@ -55,7 +55,7 @@ using System.Collections.Generic;
             Assert.AreEqual(0.0, Database.Instance.GetWord("Overwatch").understandingCurrent, "Overwatch understanding current after second");
             Assert.AreEqual(1.0, Database.Instance.GetWord("sex").understandingCurrent,       "Sex understanding current after second");
             Assert.AreEqual(1, unknownWords.Count,                                            "Dad understands Sonic well enough now");
-            Assert.AreEqual("Overwatch", unknownWords[0],                                     "Dad still doesn't know Overwatch, though");
+            Assert.AreEqual("Overwatch", unknownWords[0].word,                                "Dad still doesn't know Overwatch, though");
 
             // Third string: Dad kind of knows video games (0.5) and definitely knows guns and teamwork (both 1.0), so now he knows Overwatch well enough.
             this.scorer.EvaluatePlayerPhrase(SentenceType.ItsThreeBlanks, third, unknownWords, image.linkedWords);
