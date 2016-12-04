@@ -69,7 +69,7 @@ using Word = Database.Word;
                     continue;
                 }
                 double delta = currentWord.understandingCurrent - imageWords.Where(word => word.word.Equals(currentNotUnderstoodWords[i])).First().weight;
-                this.DetermineConfunderstansionChange(delta, sentenceType);
+                this.DetermineConfunderstansionChangeForWord(delta, currentWord.understandingCurrent, sentenceType);
             }
             // Update the not understood words list to remove words that are now understood.
             for (int i = 0; i < currentNotUnderstoodWords.Count; i++)
@@ -89,9 +89,31 @@ using Word = Database.Word;
             }
         }
 
-        private void DetermineConfunderstansionChange(double deltaCurrentToGoalUnderstanding, string sentenceType)
+        private void DetermineConfunderstansionChangeForWord(double deltaCurrentToGoalUnderstanding, double currentUnderstanding, string sentenceType)
         {
+            // Just putting this in for tests because game jam!
+            if (Game.Instance == null) {
+                return;
+            }
 
+            // Note that multi-word responses naturally weigh a little more towards understanding since dad's per-word understanding will (can) increase faster.
+            double multiplier =
+                sentenceType.Equals(SentenceType.RememberBlank) ? 0.3 :
+                sentenceType.Equals(SentenceType.ItsBlank) || sentenceType.Equals(SentenceType.ItsJustBlank) || sentenceType.Equals(SentenceType.ItsSimilarToBlank) ? 0.6 :
+                sentenceType.Equals(SentenceType.IfYouMixTheseThree) || sentenceType.Equals(SentenceType.ItsThreeBlanks) ? 1.2 :
+                1.0;
+            if (deltaCurrentToGoalUnderstanding >= 0.0) { // This will trigger once when the word is understood, since it's then removed from the notUnderstoodList.
+                Game.Instance.Understanding += (float)(multiplier * 3.0); // 3 is arbitrary for now, high enough to work towards game end.
+                Game.Instance.Confusion -= (float)(multiplier * 2.0);
+            } else if (deltaCurrentToGoalUnderstanding >= -0.2) {
+                Game.Instance.Confusion += (float)(multiplier * 0.5);
+            } else if (currentUnderstanding < 0.2) {
+                Game.Instance.Understanding -= (float)(multiplier * 1.0);
+                Game.Instance.Confusion += (float)(multiplier * 3.0);
+            } else {
+                Game.Instance.Understanding -= (float)(multiplier * 1.0);
+                Game.Instance.Confusion += (float)(multiplier * 1.0);
+            }
         }
 
         /// <summary>

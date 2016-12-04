@@ -17,8 +17,8 @@ public class Game : MonoBehaviour
     private float understanding = 0;
     [SerializeField]
     private float confusion = 0;
-    public float Understanding { get { return this.understanding; } set { this.understanding = value; } }
-    public float Confusion { get { return this.confusion; } set { this.confusion = value; } }
+    public float Understanding { get { return this.understanding; } set { this.understanding = Mathf.Clamp(value, 0f, this.confunderstansionMaxValue); } }
+    public float Confusion { get { return this.confusion; } set { this.confusion = Mathf.Clamp(value, 0f, this.confunderstansionMaxValue); } }
     [SerializeField]
     [Tooltip("The amount by which confusion should increase by default every second.")]
     private float confusionRateOfIncrease;
@@ -30,6 +30,7 @@ public class Game : MonoBehaviour
 
     public void Awake() // Awake so it can be used in Start elsewhere.
     {
+        instance = this;
         database.Database.Initialize();
         this.myScorer = new database.Scorer();
         database.DadResponder.Initialize();
@@ -51,7 +52,12 @@ public class Game : MonoBehaviour
     #region Singleton management
     private static Game instance;
     public static Game Instance {
-        get { return instance; }
+        get {
+            if (instance == null) {
+                instance = new Game();
+            }
+            return instance;
+        }
     }
     #endregion
 }
