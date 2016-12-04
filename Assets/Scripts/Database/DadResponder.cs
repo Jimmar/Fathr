@@ -48,11 +48,15 @@ using System.Linq;
         /// <returns>Output string.</returns>
         public string GetOutputForCurrentState()
         {
+            // Dad is hung up on an unknown word you used to describe something.
+            if (Game.Instance.myScorer.AdditionalUnknownWord != null) {
+                return string.Format("{0} what's {1}?", random.Random.Bool() ? "But" : "Wait,", Game.Instance.myScorer.AdditionalUnknownWord);
+            }
             // Dad might understand in part, though he's not confused about a specific thing.
-            if (Game.Instance.currentImage.linkedWords.Count > Game.Instance.outstandingNotUnderstoodWords.Count &&
+            else if (Game.Instance.currentImage.linkedWords.Count > Game.Instance.outstandingNotUnderstoodWords.Count &&
                 Game.Instance.outstandingNotUnderstoodWords.Count > 0)
             {
-                return UnityEngine.Random.Range(0, 2) == 0 ? "Okay, go on..." : "I'm starting to get it?...";
+                return random.Random.Bool() ? "I still don't understand the picture..." : "I'm starting to get this picture?...";
             }
             return "ERROR ERROR ERROR I AM A ROBOT";
         }
@@ -80,7 +84,7 @@ using System.Linq;
         {
             Game.Instance.currentImage = Database.Instance.GetUnusedImage();
             Game.Instance.outstandingNotUnderstoodWords.Clear();
-            Game.Instance.outstandingNotUnderstoodWords.AddRange(Game.Instance.currentImage.linkedWords.Select(word => word.word));
+            Game.Instance.outstandingNotUnderstoodWords.AddRange(Game.Instance.currentImage.linkedWords.Select(word => Database.Instance.GetOrCreateWord(word.word))); // GetOrCreate is so that words that dad is assumed to understand will just get added automatically.
         }
 
         #region Singleton management

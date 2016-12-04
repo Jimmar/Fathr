@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using LinkedWord = Database.LinkedWord;
 using Word = Database.Word;
 
     /// <summary>
@@ -10,19 +11,26 @@ using Word = Database.Word;
     /// </summary>
     public class Scorer
     {
-        private delegate void PreviousEvaluation(); // Should bake in the lists.
-        private List<PreviousEvaluation> previousEvaluations = new List<PreviousEvaluation>();
-        private Stack<Word> wordstoUpdate = new Stack<Word>(); // Stack so that we can retrieve not understood words in order.
-        public Stack<Word> WordsToUpdate { get { return this.wordstoUpdate; } }
+        private List<Word> wordstoUpdate = new List<Word>(); // Track which words need to have their understanding values updated.
+        // Used to track not understood words that are used to describe other words. Pseudo-stack; when considering new words, checked in reverse order via this property.
+        // LinkedWords since they'll need to be assigned weights based on the related word.
+        private List<LinkedWord> additionalUnknownWords = new List<LinkedWord>();
+        // Right now, purely for output.
+        public string AdditionalUnknownWord { get { return this.additionalUnknownWords.Count > 0 ? this.additionalUnknownWords.Last().word : null; } }
         
         public void ResetForNewImage()
         {
-            while (this.wordstoUpdate.Count > 0) {
-                Word word = this.wordstoUpdate.Pop();
+            foreach (Word word in this.wordstoUpdate) {
                 word.understanding = System.Math.Max(word.understanding, word.understandingCurrent);
             }
-            this.previousEvaluations.Clear();
             this.wordstoUpdate.Clear();
+            this.additionalUnknownWords.Clear();
+        }
+
+        [Flags]
+        public enum ScoreState
+        {
+
         }
 
         /// <summary>
@@ -32,61 +40,80 @@ using Word = Database.Word;
         /// <param name="inputWords">The words used by the player, divided by the Words and not literal words. (E.g. "video games" is one Word.)</param>
         /// <param name="currentNotUnderstoodWords">All words active on the current image that dad doesn't understand. These are the words to be updated.</param>
         /// <param name="imageWords">The Word objects associated with the current image.</param>
-        public void EvaluatePlayerPhrase(string sentenceType, List<string> inputWords, List<string> currentNotUnderstoodWords, List<Database.LinkedWord> imageWords)
+        public void EvaluatePlayerPhrase(string sentenceType, List<string> inputWords, List<Word> currentNotUnderstoodWords, List<Database.LinkedWord> imageWords)
         {
+            // workarounds since currentNotUnderstoodWords is outstandingNotUnderstoodWords.
+            int originalCount = currentNotUnderstoodWords.Count; // Technically going to modify the collection when adding to outstandingNotUnderstoodWords.
+            List<Word> originalNotUnderstoodWords = currentNotUnderstoodWords.GetRange(0, originalCount);
             // Compare each word against the input words, updating the current understanding while maintaining the base so that values aren't prematurely updated.
-            foreach (string currentNotUnderstoodStr in currentNotUnderstoodWords)
+            for (int w = 0; w < originalCount; w++)
             {
-                Word currentWord;
-                if (!Database.Instance.TryGetWord(currentNotUnderstoodStr, out currentWord)) { // Dad already understands this, probably.
-                    continue;
-                }
+                Word currentWord = originalNotUnderstoodWords[w];
                 currentWord.understandingCurrent = Math.Max(currentWord.understandingCurrent,
                     this.EvaluateForWord(inputWords, currentWord));
                 
                 if (!this.wordstoUpdate.Contains(currentWord)) {
-                    this.wordstoUpdate.Push(currentWord);
+                    this.wordstoUpdate.Add(currentWord);
+                }
+
+                // Lots of redundancies here, but...
+                // If a word was used that itself isn't fully understood, remember to follow up on it.
+                foreach (string inputWord in inputWords)
+                {
+                    Word inputWordObj;
+                    Database.Instance.TryGetWord(inputWord, out inputWordObj);
+                    if (inputWordObj != null && inputWordObj.understandingCurrent < 1 &&
+                        ( this.additionalUnknownWords.Count == 0 || !this.additionalUnknownWords.Select(word => word.word).Contains(currentWord.word) ) &&
+                        currentWord.linkedWords.Where(word => word.word.Equals(inputWord)).Count() > 0) // Just get the weight from the earliest element that uses the unknown word, assuming they're in descending order in the XML file.
+                    {
+                        // Add the new word to the image, adding a weight based on its relationship to the word that begat it, unless dad already knows it.
+                        double requiredWeight = 
+                            currentWord.linkedWords.Where(word => word.word.Equals(inputWord)).First().weight * 
+                            imageWords.Where(word => word.word.Equals(currentWord.word)).First().weight;
+                        if (inputWordObj.understandingCurrent < requiredWeight)
+                        {
+                            this.additionalUnknownWords.Add(new LinkedWord(inputWord, requiredWeight));
+                            Game.Instance.outstandingNotUnderstoodWords.Add(inputWordObj);
+                        }
+                    }
                 }
             }
             // After updating all not understood words, reevaluate previous words and update their current understanding if needed.
-            foreach (PreviousEvaluation eval in this.previousEvaluations) {
-                eval();
-            }
-            // Add the word evaluation call to the list of previous calls so we can re-call it as understandings get updated.
-            // This will add duplicates, but that's okay. Also there's some redundant work. Oops.
-            foreach (string currentNotUnderstoodStr in currentNotUnderstoodWords)
-            {
-                Word currentWord;
-                if (!Database.Instance.TryGetWord(currentNotUnderstoodStr, out currentWord)) { // Dad already understands this, probably.
-                    continue;
-                }
-                this.previousEvaluations.Add(() => {
-                    currentWord.understandingCurrent = Math.Max(currentWord.understandingCurrent, this.EvaluateForWord(inputWords, currentWord)); // Copy-paste from above.
-                }); 
+            List<string> inputWithAdditional = inputWords.Union(this.additionalUnknownWords.Select(word => word.word)).ToList(); // Union prevents duplicates.
+            for (int i = 0; i < originalNotUnderstoodWords.Count; i++) {
+                Word currentWord = originalNotUnderstoodWords[i];
+                currentWord.understandingCurrent = Math.Max(currentWord.understandingCurrent, this.EvaluateForWord(inputWithAdditional, currentWord));
             }
             // Update the global confusion/understanding based on the sentence type and the difference from the target understandings to the current ones.
-            for (int i = 0; i < currentNotUnderstoodWords.Count; i++)
+            for (int i = 0; i < originalNotUnderstoodWords.Count; i++)
             {
-                Word currentWord;
-                if (!Database.Instance.TryGetWord(currentNotUnderstoodWords[i], out currentWord)) { // Dad already understands this, probably.
-                    continue;
+                Word currentWord = originalNotUnderstoodWords[i];
+                // Just gonna make recursive words not contribute here, since they'll add to confusion later.
+                if (imageWords.Where(word => word.word.Equals(currentWord.word)).Count() > 0) {
+                    double delta = currentWord.understandingCurrent - imageWords.Where(word => word.word.Equals(currentWord.word)).First().weight;
+                    this.DetermineConfunderstansionChangeForWord(delta, currentWord.understandingCurrent, sentenceType);
                 }
-                double delta = currentWord.understandingCurrent - imageWords.Where(word => word.word.Equals(currentNotUnderstoodWords[i])).First().weight;
-                this.DetermineConfunderstansionChangeForWord(delta, currentWord.understandingCurrent, sentenceType);
             }
             // Update the not understood words list to remove words that are now understood.
             for (int i = 0; i < currentNotUnderstoodWords.Count; i++)
             {
-                Database.LinkedWord correspondingImageWord = imageWords.Where(word => word.word.Equals(currentNotUnderstoodWords[i])).FirstOrDefault();
+                Database.LinkedWord correspondingImageWord = imageWords.Where(word => word.word.Equals(currentNotUnderstoodWords[i].word)).FirstOrDefault();
+                correspondingImageWord = correspondingImageWord ?? this.additionalUnknownWords.Where(word => word.word.Equals(currentNotUnderstoodWords[i].word)).FirstOrDefault();
                 if (correspondingImageWord != null)
                 {
-                    Word currentWord;
-                    Database.Instance.TryGetWord(currentNotUnderstoodWords[i], out currentWord);
+                    Word currentWord = currentNotUnderstoodWords[i];
                     if (currentWord == null ||
                         currentWord.understandingCurrent >= correspondingImageWord.weight - float.Epsilon)
                     {
-                        currentNotUnderstoodWords.RemoveAt(i);
+                        currentNotUnderstoodWords.RemoveAt(i); // This stays as current so we remove from the original set.
                         i--;
+                        // Ugh.
+                        for (int j = 0; j < this.additionalUnknownWords.Count; j++) {
+                            if (this.additionalUnknownWords[j].word.Equals(currentWord.word)) {
+                                this.additionalUnknownWords.RemoveAt(j);
+                                j--;
+                            }
+                        }
                     }
                 }
             }
@@ -135,11 +162,16 @@ using Word = Database.Word;
                 // If the linkedWord doesn't have a database entry, assume that dad understands it.
                 if (linkedWord != null)
                 { // Don't use current so that understanding of just this word doesn't increase until the image is done. Otherwise, redoing the same function call will keep adding to understanding.
-                    sum += linkedWord.weight * (inputWord != null ? inputWord.understanding : 1);
+                    // However, do allow this to update if in the additional words list.
+                    double understandingBase = (inputWord != null ? inputWord.understanding : 1);
+                    double understanding = this.additionalUnknownWords.Count > 0 && this.additionalUnknownWords.Select(word => word.word).Contains(linkedWord.word) ? inputWord.understandingCurrent : understandingBase; // Seems dicey, but if LinkedWord were a struct that might help here.
+                    sum += linkedWord.weight * (inputWord != null ? understanding : 1);
                     wordCount++; // Increase whether or not the input word, which is in the database, is related to the not understood word.
                 }
             }
-            return Math.Min(1, (wordCount > 0 ? sum / wordCount : 0) + currentNotUnderstoodWord.understanding);
+            return Math.Min(
+                1, 
+                (wordCount > 0 ? sum / wordCount : 0) + currentNotUnderstoodWord.understanding);
         }
 
         /// <summary>
@@ -162,7 +194,7 @@ using Word = Database.Word;
                 Game.Instance.Understanding += 3.0f;
             } else {
                 for (int i = 0; i < Game.Instance.outstandingNotUnderstoodWords.Count; i++) {
-                    Game.Instance.Confusion += 1.0f - (float)Database.Instance.GetWord(Game.Instance.outstandingNotUnderstoodWords[i]).understandingCurrent;
+                    Game.Instance.Confusion += 1.0f - (float)Game.Instance.outstandingNotUnderstoodWords[i].understandingCurrent;
                 }
             }
         }
