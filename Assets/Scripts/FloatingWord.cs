@@ -3,13 +3,15 @@
 public class FloatingWord : MonoBehaviour {
 
 	[HideInInspector] public float original_y;
-	float speed = 2;
-	float amplitude = 2;
 	[HideInInspector] public bool shouldFloat;
+	float speed;
+	float amplitude;
 	// Use this for initialization
 	void Start () {
 		original_y = transform.position.y;
 		shouldFloat = true;
+		float speed = Random.Range(1,4);
+		float amplitude = Random.Range(1,4);
 	}
 	
 	// Update is called once per frame

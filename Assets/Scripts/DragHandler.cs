@@ -17,6 +17,10 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 	public void resetPosition(){
 		transform.SetParent(originParent);
 		transform.position = originPosition;
+		FloatingWord fw = GetComponent<FloatingWord>();
+		if(fw != null){
+			fw.shouldFloat = true;
+		}
 	}
 
 	#region IBeginDragHandler implementation
@@ -48,22 +52,20 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
 	public void OnEndDrag (PointerEventData eventData)
 	{
-		FloatingWord fw = itemBeingDragged.GetComponent<FloatingWord>();
-		if(fw != null){
-			fw.original_y = transform.position.y;
-			fw.shouldFloat = true;
-		}
+		// FloatingWord fw = itemBeingDragged.GetComponent<FloatingWord>();
+		// if(fw != null){
+		// 	fw.original_y = transform.position.y;
+		// 	fw.shouldFloat = true;
+		// }
 		
 		itemBeingDragged = null;
 		GetComponent<CanvasGroup>().blocksRaycasts = true;
 		if(transform.parent == transform.root){
-			print("same as start parent");
-			print(transform.parent);
 			transform.position = startPosition;
-			if(fw != null){
-				fw.original_y = transform.position.y;
-				fw.shouldFloat = true;
-			}
+			// if(fw != null){
+			// 	fw.original_y = transform.position.y;
+			// 	fw.shouldFloat = true;
+			// }
 		}
 	}
 
