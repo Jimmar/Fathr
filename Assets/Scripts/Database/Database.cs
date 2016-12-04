@@ -20,7 +20,7 @@
         private string imageFilesResourcesPath;
         private string imageFilesActualPath { get { return Path.Combine(Application.dataPath, "Resources/" + imageFilesResourcesPath_c); } }
 
-        private Dictionary<string, Word> wordDatabase;   // Keys are the words.
+        private Dictionary<string, Word> wordDatabase; // Keys are the words.
         private List<Image> imageDatabase;
         private List<string> fakeWordDatabase; // Usable for all words.
 
@@ -43,7 +43,12 @@
             /// <summary>Tracks understanding as it's changed for the current image, and then this is assigned to understanding.</summary>
             public double understandingCurrent { get; set; }
 
-            public Word() { } // Needed for serialization.
+            public Word() { } // Needed for deserialization.
+            public Word(string word) { // Try to not use.
+                this.word = word;
+                this.linkedWords = new List<LinkedWord>();
+                this.linkedDescriptors = new List<LinkedWord>();
+            }
 
             public void OnDeserialization(object sender) { // Nothing is deserialized in before construction, so initialize here.
                 this.understandingCurrent = this.understanding;
@@ -66,7 +71,7 @@
             [XmlIgnore]
             public bool hasBeenUsedAlready = false;
         }
-
+        // NOTE: Splitting this up into using Word, LinkedWord, and string was a bad idea.
         [XmlRoot("Link")]
         public class LinkedWord
         {
@@ -74,6 +79,13 @@
             public string word { get; private set; }
             [XmlAttribute("weight")]
             public double weight { get; private set; }
+
+            public LinkedWord() { } // For deserialization.
+
+            public LinkedWord(string word, double weight) {
+                this.word = word;
+                this.weight = weight;
+            }
         }
         #endregion
 
@@ -173,6 +185,18 @@
             } catch {
                 word = null;
                 return false;
+            }
+        }
+        public Word GetOrCreateWord(string targetWord)
+        {
+            try {
+                return this.GetWord(targetWord);
+            } catch {
+                Word word = new Word(targetWord);
+                word.understanding = 1;
+                word.understandingCurrent = 1;
+                this.wordDatabase.Add(targetWord, word);
+                return word;
             }
         }
 

@@ -5,12 +5,16 @@ using System.Collections.Generic;
 public class SentanceFormer : MonoBehaviour {
     private static string[] sentenceArray_s = database.SentenceType.sentanceArray;
 
-	int sentanceIndex = 0;
+	int sentanceIndex = 1;
 	[SerializeField] GameObject wordSpot;
 	[SerializeField] GameObject wordBlock;
+    [SerializeField] GameObject nonWordText;
+    [SerializeField] HorizontalLayoutGroup layoutGroup;
 	// Use this for initialization
-	void Start () {
-		DisplaySentance(sentenceArray_s[sentanceIndex]);
+	void Start ()
+    {
+        sentanceIndex = Random.Range(1, sentenceArray_s.Length); // 1 so we don't start on "let's keep going".
+        DisplaySentance(sentenceArray_s[sentanceIndex]);
 	}
 	
 	// Update is called once per frame
@@ -20,17 +24,16 @@ public class SentanceFormer : MonoBehaviour {
 
 	public void DisplaySentance(string sentance){
 		DeleteAllChildren();
-		string []sentanceSplitted = sentance.Trim().Split();
+		string []sentanceSplitted = sentance.Trim().Split(database.SentenceType.delimiterChar);
 		for (int i = 0; i < sentanceSplitted.Length; i++){
-			Transform newSpot = Instantiate(wordSpot, transform.position, transform.rotation).transform;
-			newSpot.SetParent(transform);
-			if(sentanceSplitted[i] != "_"){
-				Transform newWordBlock = Instantiate(wordBlock, transform.position, transform.rotation).transform;
-				Destroy(newWordBlock.GetComponent<DragHandler>());
-				newWordBlock.SetParent(newSpot);
-				newWordBlock.GetComponentInChildren<Text>().text = sentanceSplitted[i];
+            GameObject newNonWord = Instantiate(this.nonWordText, this.transform);
+            newNonWord.GetComponent<Text>().text = sentanceSplitted[i];
+			if(i < sentanceSplitted.Length - 1){
+			    Transform newSpot = Instantiate(wordSpot, transform.position, transform.rotation, this.transform).transform;
 			}
 		}
+        // Hack to refresh content layout.
+        LayoutRebuilder.ForceRebuildLayoutImmediate(this.GetComponent<RectTransform>());
 	}
 
 	private void DeleteAllChildren(){
@@ -63,8 +66,11 @@ public class SentanceFormer : MonoBehaviour {
 	public void SubmitPressed(){
 		string output = "";
 		List<string> outWordsList = new List<string>();
-		List<string> submitWordsList = new List<string>();
 		foreach(Transform child in transform){
+            if (!child.name.Contains("Spot")) {
+                continue;
+            }
+
 			if(child.childCount<1){
 				print("fill all the spaces");
 				return;
@@ -73,17 +79,12 @@ public class SentanceFormer : MonoBehaviour {
 			output+=child.GetChild(0).GetComponentInChildren<Text>().text+" ";
 		}
 		print (output);
-		string [] originalList = sentenceArray_s[sentanceIndex].Split();
-		for(int i=0; i<originalList.Length; i++){
-			if(originalList[i].Equals(database.SentenceType.delimiter)){
-				submitWordsList.Add(outWordsList[i]);
-			}
-		}
 
-		database.DadResponder.Instance.SubmitPlayerInput(sentenceArray_s[sentanceIndex],submitWordsList,out output);
+		database.DadResponder.Instance.SubmitPlayerInput(sentenceArray_s[sentanceIndex], outWordsList, out output);
 
 		print(output);
 
 		GameObject.FindObjectOfType<GameManager>().DadSays(output);
+        this.NextSentance();
 	}
 }

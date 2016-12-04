@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour {
 	[SerializeField] SentanceFormer sentanceFormer;
 	[SerializeField] WordPlacement wordPlacement;
 	[SerializeField] Text dadText;
-	//bool shouldUpdate = false;
 	// Use this for initialization
 	void Start () {
 		UpdateState();
