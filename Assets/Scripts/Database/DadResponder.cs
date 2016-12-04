@@ -1,5 +1,6 @@
 ﻿namespace database
 {
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,15 +24,21 @@ using System.Linq;
         }
 
         /// <summary>
-        /// Handle the player input phrase. This will update dad's understanding of any words involved.
-        /// Afterwards, use GetOutputForCurrentState to retrieve the next string.
+        /// Handle the player input phrase. This will update dad's understanding of any words involved and return the next thing for dad to say.
         /// </summary>
         /// <param name="sentenceType">The sentence template used for this submission. Use SentenceType strings.</param>
         /// <param name="inputWords">The words that the player filled in. Separated by strings, not literal words. (E.g. "video games" is one string).</param>
-        public void SubmitPlayerInput(string sentenceType, List<string> inputWords)
+        /// <param name="nextDadPhrase">Out param. The next thing for dad to say will be assigned here regardless of return value.</param>
+        public bool SubmitPlayerInput(string sentenceType, List<string> inputWords, out string nextDadPhrase)
         {
             Game.Instance.myScorer.EvaluatePlayerPhrase(sentenceType, inputWords, Game.Instance.outstandingNotUnderstoodWords, Game.Instance.currentImage.linkedWords);
-
+            if (/*Game.Instance.CheckForImageComplete() || */sentenceType.Equals(SentenceType.NeverMindKeepGoing, StringComparison.OrdinalIgnoreCase)) {
+                nextDadPhrase = this.AdvanceImage();
+                return true;
+            } else {
+                nextDadPhrase = this.GetOutputForCurrentState();
+            }
+            return false;
         }
 
         /// <summary>
@@ -40,15 +47,28 @@ using System.Linq;
         /// <returns>Output string.</returns>
         public string GetOutputForCurrentState()
         {
-            if (Game.Instance.currentImage == null)
-            {
-                Game.Instance.currentImage = Database.Instance.GetUnusedImage();
-                Game.Instance.outstandingNotUnderstoodWords.Clear();
-                Game.Instance.outstandingNotUnderstoodWords.AddRange(Game.Instance.currentImage.linkedWords.Select(word => word.word));
-                return "What is this, child?";
-            }
 
             return "ERROR ERROR ERROR I AM A ROBOT";
+        }
+
+        /// <summary>
+        /// Advances the image as far as the database things are concerned. The UI might hang onto the existing image for longer
+        /// until it's ready to display the new one.
+        /// <returns>The thing for dad to say regarding the previous image.</returns>
+        /// </summary>
+        private string AdvanceImage()
+        {
+            throw new NotImplementedException();
+            string dadOutput =
+                Game.Instance.outstandingNotUnderstoodWords.Count > 1 ? "Well, if you say so..." :
+                Game.Instance.outstandingNotUnderstoodWords.Count > 0 ? "Okay, that's fine, I guess." :
+                "Okay, I think I get it now.";
+
+            Game.Instance.currentImage = Database.Instance.GetUnusedImage();
+            Game.Instance.outstandingNotUnderstoodWords.Clear();
+            Game.Instance.outstandingNotUnderstoodWords.AddRange(Game.Instance.currentImage.linkedWords.Select(word => word.word));
+
+
         }
 
         #region Singleton management
