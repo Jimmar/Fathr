@@ -27,11 +27,11 @@ using Word = Database.Word;
         /// <summary>
         /// Updates the understood words based on the input phrase. Check the Word objects in the database for their UnderstandingBase.
         /// </summary>
-        /// <param name="sentenceType">The type of sentence that the player selected.</param>
+        /// <param name="sentenceType">The type of sentence that the player selected. Use SentenceType members.</param>
         /// <param name="inputWords">The words used by the player, divided by the Words and not literal words. (E.g. "video games" is one Word.)</param>
         /// <param name="currentNotUnderstoodWords">All words active on the current image that dad doesn't understand. These are the words to be updated.</param>
         /// <param name="imageWords">The Word objects associated with the current image.</param>
-        public void EvaluatePlayerPhrase(SentenceType sentenceType, List<string> inputWords, List<string> currentNotUnderstoodWords, List<Database.LinkedWord> imageWords)
+        public void EvaluatePlayerPhrase(string sentenceType, List<string> inputWords, List<string> currentNotUnderstoodWords, List<Database.LinkedWord> imageWords)
         {
             // Compare each word against the input words, updating the current understanding while maintaining the base so that values aren't prematurely updated.
             foreach (string currentNotUnderstoodStr in currentNotUnderstoodWords)
