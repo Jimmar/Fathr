@@ -61,6 +61,16 @@ using Word = Database.Word;
                 }
                 this.previousEvaluations.Add(() => { this.EvaluateForWord(inputWords, currentWord); });
             }
+            // Update the global confusion/understanding based on the sentence type and the difference from the target understandings to the current ones.
+            for (int i = 0; i < currentNotUnderstoodWords.Count; i++)
+            {
+                Word currentWord;
+                if (!Database.Instance.TryGetWord(currentNotUnderstoodWords[i], out currentWord)) { // Dad already understands this, probably.
+                    continue;
+                }
+                double delta = currentWord.understandingCurrent - imageWords.Where(word => word.word.Equals(currentNotUnderstoodWords[i])).First().weight;
+                this.DetermineConfunderstansionChange(delta, sentenceType);
+            }
             // Update the not understood words list to remove words that are now understood.
             for (int i = 0; i < currentNotUnderstoodWords.Count; i++)
             {
@@ -77,6 +87,11 @@ using Word = Database.Word;
                     }
                 }
             }
+        }
+
+        private void DetermineConfunderstansionChange(double deltaCurrentToGoalUnderstanding, string sentenceType)
+        {
+
         }
 
         /// <summary>
@@ -100,6 +115,25 @@ using Word = Database.Word;
                 }
             }
             return Math.Min(1, (wordCount > 0 ? sum / wordCount : 0) + currentNotUnderstoodWord.understanding);
+        }
+
+        /// <summary>
+        /// Without updating the score or understandings, simply determine if the current image has been adequately explained.
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckForImageComplete()
+        {
+            // TODO: Check for adjectives.
+            return Game.Instance.outstandingNotUnderstoodWords == null || Game.Instance.outstandingNotUnderstoodWords.Count == 0; // Shouldn't be null here, but...
+        }
+
+        /// <summary>
+        /// To be called when changing images, this will impose a penalty if the player didn't adequately explain the image.
+        /// Do this before actually changing the images so the scorer can query the game state.
+        /// </summary>
+        public void CheckForImageEndBonusOrPenalty()
+        {
+
         }
     }
 }
