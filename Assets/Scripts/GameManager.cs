@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour {
 	[SerializeField] RawImage tumblrImage;
 	[SerializeField] SentanceFormer sentanceFormer;
 	[SerializeField] WordPlacement wordPlacement;
+	[SerializeField] Text dadText;
+	bool shouldUpdate = false;
 	// Use this for initialization
 	void Start () {
 		UpdateState();
@@ -17,7 +19,10 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if(shouldUpdate){
+			UpdateState();
+			shouldUpdate = false;
+		}
 	}
 
 	void ChangeImage(string newImagePath){
@@ -30,7 +35,6 @@ public class GameManager : MonoBehaviour {
 		ChangeImage(image.resourcePath);
 		HashSet<string> wordsList = new HashSet<string>();
 		foreach(database.Database.LinkedWord linkedword in image.linkedWords){
-//			print(linkedword.word);
 			try{
 				foreach(string word in database.Database.Instance.GetWordsLinkedTo(linkedword.word, 0)){
 					wordsList.Add(word);
@@ -42,5 +46,10 @@ public class GameManager : MonoBehaviour {
 		}
 
 		wordPlacement.GenerateWords(wordsList.ToArray());
+	}
+
+	public void DadSays(string say){
+		dadText.text = say;
+		shouldUpdate = true;
 	}
 }

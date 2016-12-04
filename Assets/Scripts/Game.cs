@@ -11,7 +11,7 @@ public class Game : MonoBehaviour
     [HideInInspector]
     public List<string> outstandingNotUnderstoodWords = new List<string>();
 
-    public bool isGameOver { get { return this.confusion >= this.understanding; } }
+	public bool isGameOver { get { return this.confusion + this.understanding >= this.confunderstansionMaxValue; } }
 
     [SerializeField]
     private float understanding = 0;

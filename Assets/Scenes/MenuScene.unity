@@ -942,7 +942,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1240015147
 RectTransform:
   m_ObjectHideFlags: 0
@@ -959,7 +959,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 512, y: 384}
-  m_SizeDelta: {x: 500, y: 500}
+  m_SizeDelta: {x: 500, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1240015148
 MonoBehaviour:
@@ -1250,7 +1250,7 @@ MonoBehaviour:
   understanding: 0
   confusion: 0
   confusionRateOfIncrease: 0
-  confunderstansionMaxValue: 0
+  confunderstansionMaxValue: 100
 --- !u!4 &1535582029
 Transform:
   m_ObjectHideFlags: 0
@@ -1278,6 +1278,7 @@ MonoBehaviour:
   tumblrImage: {fileID: 1240015148}
   sentanceFormer: {fileID: 991715423}
   wordPlacement: {fileID: 1489585275}
+  dadText: {fileID: 704102759}
 --- !u!1 &1685935954
 GameObject:
   m_ObjectHideFlags: 0
