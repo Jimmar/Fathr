@@ -15,4 +15,8 @@ public class Dad : MonoBehaviour {
 	void Update () {
 		
 	}
+
+	public void DadLeaves(){
+		GetComponent<Animation>().Play();
+	}
 }
