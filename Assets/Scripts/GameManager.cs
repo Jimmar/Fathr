@@ -14,7 +14,8 @@ public class GameManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		UpdateState();
-	}
+        this.GenerateWords();
+    }
 
 	void ChangeImage(string newImagePath){
 		Texture2D texture = Resources.Load(newImagePath) as Texture2D;
@@ -24,8 +25,11 @@ public class GameManager : MonoBehaviour {
 	public void UpdateState(){
 		database.Database.Image image = Game.Instance.currentImage;
 		ChangeImage(image.resourcePath);
+	}
+    private void GenerateWords()
+    {
 		HashSet<string> wordsList = new HashSet<string>();
-		foreach(database.Database.LinkedWord linkedword in image.linkedWords){
+		foreach(database.Database.LinkedWord linkedword in Game.Instance.currentImage.linkedWords){
 			try{
 				foreach(string word in database.Database.Instance.GetWordsLinkedTo(linkedword.word, 3)){
 					wordsList.Add(word);
@@ -37,10 +41,13 @@ public class GameManager : MonoBehaviour {
 		}
 
 		wordPlacement.GenerateWords(wordsList.ToArray());
-	}
+    }
 
-	public void DadSays(string say){
+	public void DadSays(string say, bool shouldGetWords = true){
 		dadText.text = say;
         UpdateState();
+        if (shouldGetWords) {
+            this.GenerateWords();
+        }
 	}
 }

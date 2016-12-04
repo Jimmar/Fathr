@@ -1,0 +1,18 @@
+<WordRoot>
+  <BaseWord word="girl">
+    <LinkedWords>
+      <Link word="woman" weight="1.0"/>
+      <Link word="girl" weight="1.0"/>
+      <Link word="female" weight="0.7"/>
+      <Link word="person" weight="0.5"/>
+      <Link word="chick" weight="0.1"/>
+      <Link word="mom" weight="0.1"/>
+      <Link word="AAAAAAAAAAAAAAAA" weight="0.0"/>
+    </LinkedWords>
+    <Descriptors>
+      <Link word="nice" weight="1.0"/>
+    </Descriptors>
+    <UnderstandingBase>1</UnderstandingBase>
+    <UnderstoodByDadType>0</UnderstoodByDadType>
+  </BaseWord>
+</WordRoot>

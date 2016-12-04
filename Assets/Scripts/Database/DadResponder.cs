@@ -1,6 +1,7 @@
 ﻿namespace database
 {
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -70,7 +71,7 @@ using System.Linq;
         {
             string dadOutput =
                 Game.Instance.outstandingNotUnderstoodWords.Count > 1 ? "Well, if you say so. I don't get that one, though..." :
-                Game.Instance.outstandingNotUnderstoodWords.Count > 0 ? "Okay, that's fine, I guess." :
+                Game.Instance.outstandingNotUnderstoodWords.Count > 0 ? "Okay, that's fine, I guess..." :
                                                                         "Okay, I think I get it now.";
             // Check this here in case the image is advanced before dad understands.
             Game.Instance.myScorer.CheckForImageEndBonusOrPenalty();
@@ -78,6 +79,8 @@ using System.Linq;
             this.ActuallyChangeImage();
 
             Game.Instance.myScorer.ResetForNewImage();
+            // Hack to animate the next phrase.
+            Game.Instance.StartCoroutine(this.WaitForNewPhrase());
             return dadOutput;
         }
         private void ActuallyChangeImage()
@@ -85,6 +88,12 @@ using System.Linq;
             Game.Instance.currentImage = Database.Instance.GetUnusedImage();
             Game.Instance.outstandingNotUnderstoodWords.Clear();
             Game.Instance.outstandingNotUnderstoodWords.AddRange(Game.Instance.currentImage.linkedWords.Select(word => Database.Instance.GetOrCreateWord(word.word))); // GetOrCreate is so that words that dad is assumed to understand will just get added automatically.
+        }
+
+        private IEnumerator WaitForNewPhrase()
+        {
+            yield return new UnityEngine.WaitForSeconds(2.1f);
+            UnityEngine.GameObject.FindObjectOfType<GameManager>().DadSays("Now what's this one?", false);
         }
 
         #region Singleton management
