@@ -15,8 +15,7 @@ using Image = Database.Image;
         [TestFixtureSetUp]
         public void Initialize()
         {
-            Database database = new Database();
-            database.Initialize("Xml/TestWords", "Xml/TestImagesFake"); // This sets the singleton instance.
+            Database.Initialize("Xml/TestWords", "Xml/TestImagesFake"); // This sets the singleton instance.
         }
 
         [Test]

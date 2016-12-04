@@ -79,21 +79,26 @@
 
         #region Initialization
         /// <summary>
+        /// Use Initialize instead.
+        /// </summary>
+        private Database() { } 
+
+        /// <summary>
         /// Call during regular game loading to prepare the words. This will also set the singleton instance.
         /// </summary>
         /// <param name="wordDirPath"> Directory of the word files, relative to Resources. Set to null to use the default..</param>
         /// <param name="imageDirPath">Directory of the image files, relative to Resources. Set to null to use the default..</param>
-        public void Initialize(string wordDirPath = null, string imageDirPath = null)
+        public static void Initialize(string wordDirPath = null, string imageDirPath = null)
         {
-            instance = this;
-            this.wordDatabase = new Dictionary<string, Word>();
-            this.imageDatabase = new List<Image>();
-            this.fakeWordDatabase = new List<string>();
-            this.wordFilesResourcesPath = wordDirPath ?? wordFilesResourcesPath_c;
-            this.imageFilesResourcesPath = imageDirPath ?? imageFilesResourcesPath_c;
+            instance = new Database();
+            instance.wordDatabase = new Dictionary<string, Word>();
+            instance.imageDatabase = new List<Image>();
+            instance.fakeWordDatabase = new List<string>();
+            instance.wordFilesResourcesPath = wordDirPath ?? wordFilesResourcesPath_c;
+            instance.imageFilesResourcesPath = imageDirPath ?? imageFilesResourcesPath_c;
 
-            this.LoadXmlWords(Path.Combine(Application.dataPath, "Resources/" + this.wordFilesResourcesPath));
-            this.LoadXmlImages(Path.Combine(Application.dataPath, "Resources/" + this.imageFilesResourcesPath));
+            instance.LoadXmlWords(Path.Combine(Application.dataPath, "Resources/" + instance.wordFilesResourcesPath));
+            instance.LoadXmlImages(Path.Combine(Application.dataPath, "Resources/" + instance.imageFilesResourcesPath));
         }
 
         /// <summary>
