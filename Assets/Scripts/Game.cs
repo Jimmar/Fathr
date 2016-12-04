@@ -12,7 +12,7 @@ public class Game : MonoBehaviour
     public database.Database.Image currentImage = null;
     [HideInInspector]
     public List<Word> outstandingNotUnderstoodWords { get; set; }
-    public List<database.Database.LinkedWord> aggregatedEmotionWeights { get; set; }
+    public List<string> aggregatedEmotions { get; set; } // By occurrence.
 
     public bool isGameOver { get { return this.confusion + this.understanding >= this.confunderstansionMaxValue; } }
     
@@ -45,7 +45,7 @@ public class Game : MonoBehaviour
     {
         instance = this;
         this.outstandingNotUnderstoodWords = new List<Word>();
-        this.aggregatedEmotionWeights = new List<database.Database.LinkedWord>();
+        this.aggregatedEmotions = new List<string>();
         database.Database.Initialize();
         this.myScorer = new database.Scorer();
         database.DadResponder.Initialize();
@@ -65,7 +65,9 @@ public class Game : MonoBehaviour
     private void EndGame()
     {
         string resultString = "";
-        string prevalentEmotion = this.aggregatedEmotionWeights.Count > 0 ? this.aggregatedEmotionWeights.OrderBy(emo => emo.weight).First().word : "weird";
+        string prevalentEmotion = this.aggregatedEmotions.Count > 0 ? 
+            this.aggregatedEmotions[random.Random.Range(0, this.aggregatedEmotions.Count)] :
+            "weird";
         bool didWin = this.understanding > this.confusion;
         resultString =
             this.understanding > this.confusion * 2 ? string.Format("Thanks, I really get it! Tumblr sure is {0}, huh?", prevalentEmotion) :

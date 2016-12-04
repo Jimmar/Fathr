@@ -79,12 +79,15 @@
             public string word { get; private set; }
             [XmlAttribute("weight")]
             public double weight { get; private set; }
+            [XmlIgnore]
+            public bool isDescriptorAssociated { get; set; }
 
             public LinkedWord() { } // For deserialization.
 
             public LinkedWord(string word, double weight) {
                 this.word = word;
                 this.weight = weight;
+                this.isDescriptorAssociated = false;
             }
         }
         #endregion
@@ -127,6 +130,7 @@
                 for (int i = 0; i < wordsFromFile.Count; i++) {
                     if (xmlFile.Name.Contains("_FakeWords")) {
                         this.fakeWordDatabase.AddRange(wordsFromFile[i].linkedWords.Select(word => word.word));
+                        this.fakeWordDatabase.AddRange(wordsFromFile[i].linkedDescriptors.Select(word => word.word));
                     } else {
                         this.wordDatabase.Add(wordsFromFile[i].word, wordsFromFile[i]);
                     }

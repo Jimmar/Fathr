@@ -23,6 +23,11 @@ public class SentanceFormer : MonoBehaviour {
 	}
 
 	public void DisplaySentance(string sentance){
+        // Hack for the adjective state.
+        if (Game.Instance.myScorer.isInAdjectiveState) {
+            sentance = database.SentenceType.Adjective;
+        }
+
 		DeleteAllChildren();
 		string []sentanceSplitted = sentance.Trim().Split(database.SentenceType.delimiterChar);
 		for (int i = 0; i < sentanceSplitted.Length; i++){

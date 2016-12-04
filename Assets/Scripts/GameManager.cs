@@ -29,16 +29,28 @@ public class GameManager : MonoBehaviour {
     private void GenerateWords()
     {
 		HashSet<string> wordsList = new HashSet<string>();
-		foreach(database.Database.LinkedWord linkedword in Game.Instance.currentImage.linkedWords){
-			try{
-				foreach(string word in database.Database.Instance.GetWordsLinkedTo(linkedword.word, 3)){
-					wordsList.Add(word);
-				}
-			}
-			catch{
-				continue;
-			}
-		}
+        if (!Game.Instance.myScorer.isInAdjectiveState) {
+		    foreach(database.Database.LinkedWord linkedword in Game.Instance.currentImage.linkedWords){
+			    try{
+				    foreach(string word in database.Database.Instance.GetWordsLinkedTo(linkedword.word, 3)){
+					    wordsList.Add(word);
+				    }
+			    }
+			    catch{
+				    continue;
+			    }
+		    }
+        }
+        else
+        {
+            foreach (string descriptor in database.Database.Instance.GetWordsLinkedTo("_Adjectives", 0))
+            {
+                wordsList.Add(descriptor);
+            }
+            foreach (database.Database.LinkedWord imgDescriptor in Game.Instance.currentImage.linkedDescriptors) {
+                wordsList.Add(imgDescriptor.word);
+            }
+        }
 
 		wordPlacement.GenerateWords(wordsList.ToArray());
     }
