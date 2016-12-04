@@ -8,6 +8,7 @@ using UnityEngine;
 public class Game : MonoBehaviour
 {
     public database.Database.Image currentImage = null;
+    [HideInInspector]
     public List<string> outstandingNotUnderstoodWords = new List<string>();
     
     public database.Scorer myScorer { get; private set; }

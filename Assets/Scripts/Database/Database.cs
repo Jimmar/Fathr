@@ -56,7 +56,7 @@
             [XmlAttribute("fileName")]
             public string fileName { get; private set; }
             [XmlIgnore]
-            public string filePath { get; set; } // Set manually.
+            public string resourcePath { get; set; } // Set manually.
             [XmlArray("LinkedWords")]
             [XmlArrayItem("Link")]
             public List<LinkedWord> linkedWords { get; private set; }
@@ -188,7 +188,7 @@
                 if (!image.hasBeenUsedAlready)
                 {
                     image.hasBeenUsedAlready = true;
-                    image.filePath = Path.Combine(this.imageFilesResourcesPath, image.fileName);
+                    image.resourcePath = Path.Combine(this.imageFilesResourcesPath, image.fileName);
                     return image;
                 }
                 timeout--;
