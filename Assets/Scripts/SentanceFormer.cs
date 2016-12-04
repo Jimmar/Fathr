@@ -38,7 +38,11 @@ public class SentanceFormer : MonoBehaviour {
 
 	private void DeleteAllChildren(){
 		var children = new List<GameObject>();
-		foreach (Transform child in transform) children.Add(child.gameObject);
+		foreach (Transform child in transform) {
+			if(child.GetComponentInChildren<DragHandler>() != null)
+				child.GetComponentInChildren<DragHandler>().resetPosition();
+			children.Add(child.gameObject);
+		};
 		children.ForEach(child => Destroy(child));
 	}
 

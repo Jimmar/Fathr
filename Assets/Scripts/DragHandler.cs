@@ -6,6 +6,19 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 	Vector3 startPosition;
 	Transform startParent;
 
+	Transform originParent;
+	Vector3 originPosition;
+
+	void Start(){
+		originParent = transform.parent;
+		originPosition = transform.position;
+	}
+
+	public void resetPosition(){
+		transform.SetParent(originParent);
+		transform.position = originPosition;
+	}
+
 	#region IBeginDragHandler implementation
 
 	public void OnBeginDrag (PointerEventData eventData)
