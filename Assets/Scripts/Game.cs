@@ -16,8 +16,8 @@ public class Game : MonoBehaviour
 
     public bool isGameOver { get { return this.confusion + this.understanding >= this.confunderstansionMaxValue; } }
     
-    private float understanding = 0;
-    private float confusion = 0;
+    private float understanding = 4;
+    private float confusion = 4;
     public float Understanding { // NOTE: Since we're clamping to 0 on every call, some data will be lost when these are near 0.
         get { return this.understanding; }
         set { this.understanding = Mathf.Clamp(value, 0f, this.confunderstansionMaxValue); this.barUnderstanding.fillAmount = this.understanding / this.confunderstansionMaxValue; }
@@ -49,6 +49,8 @@ public class Game : MonoBehaviour
         database.Database.Initialize();
         this.myScorer = new database.Scorer();
         database.DadResponder.Initialize();
+        this.Understanding = this.understanding; // Initialize bars.
+        this.Confusion = this.confusion;
     }
 
     public void Update()

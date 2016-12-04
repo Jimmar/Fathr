@@ -16,7 +16,7 @@
         public const string ItsLikeBlankButBlank = "It's like _ , but _ .";
         public const string ItsBlankWithBlank = "It's _ with _ .";
         public const string ItsABlankFromBlank = "It's a _ from _ .";
-        public const string ThinkOfBlankExceptBlank = "Think of _ , except with _ .";
+        public const string ThinkOfBlankExceptBlank = "Think of _ except with _ .";
         public const string ItsThreeBlanks = "It's _ with _ and _ .";
         public const string IfYouMixTheseThree = "If you mixed _ , _ and _ you'd get that.";
 
@@ -30,6 +30,6 @@
                                                 ItsABlankFromBlank,
                                                 ThinkOfBlankExceptBlank,
                                                 ItsThreeBlanks,
-                                                IfYouMixTheseThree };
+                                                IfYouMixTheseThree};
     }
 }

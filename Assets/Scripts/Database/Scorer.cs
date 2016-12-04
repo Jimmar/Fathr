@@ -169,7 +169,9 @@ using Word = Database.Word;
                     wordCount++; // Increase whether or not the input word, which is in the database, is related to the not understood word.
                 }
             }
-            return Math.Min(1, (wordCount > 0 ? sum / wordCount : 0) + currentNotUnderstoodWord.understanding);
+            return Math.Min(
+                1, 
+                (wordCount > 0 ? sum / wordCount : 0) + currentNotUnderstoodWord.understanding);
         }
 
         /// <summary>

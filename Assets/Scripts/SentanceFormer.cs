@@ -11,8 +11,10 @@ public class SentanceFormer : MonoBehaviour {
     [SerializeField] GameObject nonWordText;
     [SerializeField] HorizontalLayoutGroup layoutGroup;
 	// Use this for initialization
-	void Start () {
-		DisplaySentance(sentenceArray_s[sentanceIndex]);
+	void Start ()
+    {
+        sentanceIndex = Random.Range(1, sentenceArray_s.Length); // 1 so we don't start on "let's keep going".
+        DisplaySentance(sentenceArray_s[sentanceIndex]);
 	}
 	
 	// Update is called once per frame
@@ -83,5 +85,6 @@ public class SentanceFormer : MonoBehaviour {
 		print(output);
 
 		GameObject.FindObjectOfType<GameManager>().DadSays(output);
+        this.NextSentance();
 	}
 }
