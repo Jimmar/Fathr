@@ -1,0 +1,15 @@
+<WordRoot>
+  <BaseWord word="Shoujo">
+    <LinkedWords>
+      <Link word="Anime" weight="1.0"/>
+      <Link word="girl" weight="1.0"/>
+      <Link word="Japanese" weight="1.0"/>
+      <Link word="cartoon" weight="0.5"/>
+    </LinkedWords>
+    <Descriptors>
+      <Link word="interesting" weight="1.0"/>
+    </Descriptors>
+    <UnderstandingBase>0</UnderstandingBase>
+    <UnderstoodByDadType>0</UnderstoodByDadType>
+  </BaseWord>
+</WordRoot>

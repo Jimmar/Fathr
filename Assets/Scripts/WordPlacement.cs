@@ -4,12 +4,10 @@ using System.Collections.Generic;
 
 public class WordPlacement : MonoBehaviour {
 	[SerializeField] GameObject blockPrefab;
-	string []tempWordList ={"Blue", "Some", "Better", "Game"};
 	Rect myRect;
 	// Use this for initialization
 	void Start () {
 		myRect = GetComponent<RectTransform>().rect;
-		GenerateWords(tempWordList);
 	}
 	
 	// Update is called once per frame

@@ -1,0 +1,21 @@
+<WordRoot>
+  <BaseWord word="Anime">
+    <LinkedWords>
+      <Link word="Japanese" weight="1.0"/>
+      <Link word="cartoon" weight="1.0"/>
+      <Link word="movie" weight="0.7"/>
+      <Link word="swords" weight="0.5"/>
+      <Link word="guns" weight="0.5"/>
+      <Link word="drawing" weight="0.4"/>
+      <Link word="robot" weight="0.3"/>
+      <Link word="high school" weight="0.3"/>
+      <Link word="sports" weight="0.3"/>
+    </LinkedWords>
+    <Descriptors>
+      <Link word="relatable" weight="1.0"/>
+      <Link word="exciting" weight="0.5"/>
+    </Descriptors>
+    <UnderstandingBase>0</UnderstandingBase>
+    <UnderstoodByDadType>0</UnderstoodByDadType>
+  </BaseWord>
+</WordRoot>

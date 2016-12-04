@@ -5,6 +5,8 @@
     /// </summary>
     public class SentenceType
     {
+        public const string delimiter = "_";
+
         public const string NeverMindKeepGoing = "Never mind, let's keep going.";
         public const string ItsJustBlank = "It's just _ ."; // Useful for adjectives.
         public const string ItsSimilarToBlank = "It's similar to _ .";

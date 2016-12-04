@@ -1,8 +1,8 @@
 <WordRoot>
-  <Image fileName="sailormoon">
+  <Image fileName="Sailor Moon">
     <LinkedWords>
       <Link word="magical girls" weight="1.0"/>
-      <Link word="anime" weight="0.7"/>
+      <Link word="Anime" weight="0.7"/>
       <Link word="breakfast" weight="0.2"/>
     </LinkedWords>
     <Descriptors>

@@ -43,12 +43,17 @@ using System.Linq;
         }
 
         /// <summary>
-        /// Get the thing that dad should say now,
+        /// Get the thing that dad should say now. Not called when the image is changing.
         /// </summary>
         /// <returns>Output string.</returns>
         public string GetOutputForCurrentState()
         {
-
+            // Dad might understand in part, though he's not confused about a specific thing.
+            if (Game.Instance.currentImage.linkedWords.Count > Game.Instance.outstandingNotUnderstoodWords.Count &&
+                Game.Instance.outstandingNotUnderstoodWords.Count > 0)
+            {
+                return UnityEngine.Random.Range(0, 2) == 0 ? "Okay, go on..." : "I'm starting to get it?...";
+            }
             return "ERROR ERROR ERROR I AM A ROBOT";
         }
 
