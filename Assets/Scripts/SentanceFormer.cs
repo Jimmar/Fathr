@@ -2,17 +2,15 @@
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-
 public class SentanceFormer : MonoBehaviour {
+    private static string[] sentenceArray_s = database.SentenceType.sentanceArray;
 
-	string []sentencesList = {"It's like _ but _", "Do you remember _ ?", "It's the same thing as _"};
 	int sentanceIndex = 0;
 	[SerializeField] GameObject wordSpot;
 	[SerializeField] GameObject wordBlock;
 	// Use this for initialization
 	void Start () {
-		DisplaySentance(sentencesList[sentanceIndex]);
-		sentencesList = database.SentenceType.sentanceArray;
+		DisplaySentance(sentenceArray_s[sentanceIndex]);
 	}
 	
 	// Update is called once per frame
@@ -49,8 +47,8 @@ public class SentanceFormer : MonoBehaviour {
 	///	Displays the next sentance from the list
 	/// </summary>
 	public void NextSentance(){
-		sentanceIndex = (sentanceIndex+1) % sentencesList.Length;
-		DisplaySentance(sentencesList[sentanceIndex]);
+		sentanceIndex = (sentanceIndex+1) % sentenceArray_s.Length;
+		DisplaySentance(sentenceArray_s[sentanceIndex]);
 	}
 	/// <summary>
 	///	Displays the previous sentance from the list
@@ -58,8 +56,8 @@ public class SentanceFormer : MonoBehaviour {
 	public void PrevSentance(){
 		sentanceIndex = sentanceIndex-1;
 		if(sentanceIndex < 0)
-			sentanceIndex = sentencesList.Length + sentanceIndex;
-		DisplaySentance(sentencesList[sentanceIndex]);
+			sentanceIndex = sentenceArray_s.Length + sentanceIndex;
+		DisplaySentance(sentenceArray_s[sentanceIndex]);
 	}
 
 	public void SubmitPressed(){
@@ -75,17 +73,17 @@ public class SentanceFormer : MonoBehaviour {
 			output+=child.GetChild(0).GetComponentInChildren<Text>().text+" ";
 		}
 		print (output);
-		string [] originalList = sentencesList[sentanceIndex].Split();
+		string [] originalList = sentenceArray_s[sentanceIndex].Split();
 		for(int i=0; i<originalList.Length; i++){
-			if(originalList[i].Equals("-")){
-				submitWordsList.Add(originalList[i]);
+			if(originalList[i].Equals(database.SentenceType.delimiter)){
+				submitWordsList.Add(outWordsList[i]);
 			}
 		}
 
-		database.DadResponder.Instance.SubmitPlayerInput(sentencesList[sentanceIndex],submitWordsList,out output);
+		database.DadResponder.Instance.SubmitPlayerInput(sentenceArray_s[sentanceIndex],submitWordsList,out output);
 
 		print(output);
 
-		GameObject.Find("GameManager").GetComponent<GameManager>().DadSays(output);
+		GameObject.FindObjectOfType<GameManager>().DadSays(output);
 	}
 }

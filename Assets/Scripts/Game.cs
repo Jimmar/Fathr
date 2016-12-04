@@ -53,12 +53,7 @@ public class Game : MonoBehaviour
     #region Singleton management
     private static Game instance;
     public static Game Instance {
-        get {
-            if (instance == null) {
-                instance = new Game();
-            }
-            return instance;
-        }
+        get { return instance; }
     }
     #endregion
 }

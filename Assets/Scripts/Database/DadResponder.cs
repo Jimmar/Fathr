@@ -48,13 +48,11 @@ using System.Linq;
         /// <returns>Output string.</returns>
         public string GetOutputForCurrentState()
         {
-            // So many ToList calls! This isn't a looker, this here code.
-            if        (Game.Instance.currentImage.linkedWords.Select(word => word.word).ToList().ScrambledEquals(Game.Instance.outstandingNotUnderstoodWords.ToList())) {
-                // You have not gotten dad to understand any of the words.
-                return "Okay, go on...";
-            } else {
-                Database.Word nextNotUnderstoodWord = Game.Instance.myScorer.WordsToUpdate.Where(word => word.understandingCurrent < Game.Instance.currentImage.linkedWords.Where(linkedWord => linkedWord.Equals(word)).First().weight).Last();
-                return string.Format("But what is {0}?", nextNotUnderstoodWord.word);
+            // Dad might understand in part, though he's not confused about a specific thing.
+            if (Game.Instance.currentImage.linkedWords.Count > Game.Instance.outstandingNotUnderstoodWords.Count &&
+                Game.Instance.outstandingNotUnderstoodWords.Count > 0)
+            {
+                return UnityEngine.Random.Range(0, 2) == 0 ? "Okay, go on..." : "I'm starting to get it?...";
             }
             return "ERROR ERROR ERROR I AM A ROBOT";
         }

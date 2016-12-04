@@ -60,7 +60,9 @@ using Word = Database.Word;
                 if (!Database.Instance.TryGetWord(currentNotUnderstoodStr, out currentWord)) { // Dad already understands this, probably.
                     continue;
                 }
-                this.previousEvaluations.Add(() => { this.EvaluateForWord(inputWords, currentWord); });
+                this.previousEvaluations.Add(() => {
+                    currentWord.understandingCurrent = Math.Max(currentWord.understandingCurrent, this.EvaluateForWord(inputWords, currentWord)); // Copy-paste from above.
+                }); 
             }
             // Update the global confusion/understanding based on the sentence type and the difference from the target understandings to the current ones.
             for (int i = 0; i < currentNotUnderstoodWords.Count; i++)
@@ -81,7 +83,7 @@ using Word = Database.Word;
                     Word currentWord;
                     Database.Instance.TryGetWord(currentNotUnderstoodWords[i], out currentWord);
                     if (currentWord == null ||
-                        currentWord.understandingCurrent > correspondingImageWord.weight)
+                        currentWord.understandingCurrent >= correspondingImageWord.weight - float.Epsilon)
                     {
                         currentNotUnderstoodWords.RemoveAt(i);
                         i--;
