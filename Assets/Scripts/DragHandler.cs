@@ -9,9 +9,15 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 	Transform originParent;
 	Vector3 originPosition;
 
+	[SerializeField] AudioClip pickup;
+	[SerializeField] AudioClip putDown;
+
+	AudioSource audioSource;
+
 	void Start(){
 		originParent = transform.parent;
 		originPosition = transform.position;
+		audioSource = GetComponent<AudioSource>();
 	}
 
 	public void resetPosition(){
@@ -27,6 +33,8 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
 	public void OnBeginDrag (PointerEventData eventData)
 	{
+		audioSource.clip = pickup;
+		audioSource.Play();
 		itemBeingDragged = gameObject;
 		startPosition = transform.position;
 		startParent = transform.parent;
@@ -67,6 +75,8 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 			// 	fw.shouldFloat = true;
 			// }
 		}
+		audioSource.clip = putDown;
+		audioSource.Play();
 	}
 
 	#endregion
