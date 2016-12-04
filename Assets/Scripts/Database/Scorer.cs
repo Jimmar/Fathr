@@ -13,12 +13,7 @@ using Word = Database.Word;
         private delegate void PreviousEvaluation(); // Should bake in the lists.
         private List<PreviousEvaluation> previousEvaluations = new List<PreviousEvaluation>();
         private Stack<Word> wordstoUpdate = new Stack<Word>(); // Stack so that we can retrieve not understood words in order.
-
-        public void Initialize()
-        {
-            instance = this;
-        }
-
+        
         public void ResetForNewImage()
         {
             while (this.wordstoUpdate.Count > 0) {
@@ -32,10 +27,11 @@ using Word = Database.Word;
         /// <summary>
         /// Updates the understood words based on the input phrase. Check the Word objects in the database for their UnderstandingBase.
         /// </summary>
+        /// <param name="sentenceType">The type of sentence that the player selected.</param>
         /// <param name="inputWords">The words used by the player, divided by the Words and not literal words. (E.g. "video games" is one Word.)</param>
         /// <param name="currentNotUnderstoodWords">All words active on the current image that dad doesn't understand. These are the words to be updated.</param>
         /// <param name="imageWords">The Word objects associated with the current image.</param>
-        public void EvaluatePlayerPhrase(List<string> inputWords, List<string> currentNotUnderstoodWords, List<Database.LinkedWord> imageWords)
+        public void EvaluatePlayerPhrase(SentenceType sentenceType, List<string> inputWords, List<string> currentNotUnderstoodWords, List<Database.LinkedWord> imageWords)
         {
             // Compare each word against the input words, updating the current understanding while maintaining the base so that values aren't prematurely updated.
             foreach (string currentNotUnderstoodStr in currentNotUnderstoodWords)
@@ -44,7 +40,6 @@ using Word = Database.Word;
                 if (!Database.Instance.TryGetWord(currentNotUnderstoodStr, out currentWord)) { // Dad already understands this, probably.
                     continue;
                 }
-                // TODO: Handle "connector" words here.
                 currentWord.understandingCurrent = Math.Max(currentWord.understandingCurrent,
                     this.EvaluateForWord(inputWords, currentWord));
                 
@@ -106,14 +101,6 @@ using Word = Database.Word;
             }
             return Math.Min(1, (wordCount > 0 ? sum / wordCount : 0) + currentNotUnderstoodWord.understanding);
         }
-
-        #region Singleton management
-        private static Scorer instance;
-        public static Scorer Instance
-        {
-            get { return instance; }
-        }
-        #endregion
     }
 }
 
