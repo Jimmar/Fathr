@@ -165,6 +165,26 @@ Prefab:
       propertyPath: dadText
       value: 
       objectReference: {fileID: 704102759}
+    - target: {fileID: 114885406945221656, guid: 545f8c208778e493ea33fbfe96fac945,
+        type: 2}
+      propertyPath: musicManager
+      value: 
+      objectReference: {fileID: 802279592}
+    - target: {fileID: 82959890836561226, guid: 545f8c208778e493ea33fbfe96fac945,
+        type: 2}
+      propertyPath: m_Volume
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 82271896543433316, guid: 545f8c208778e493ea33fbfe96fac945,
+        type: 2}
+      propertyPath: m_Volume
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 82543499545194628, guid: 545f8c208778e493ea33fbfe96fac945,
+        type: 2}
+      propertyPath: m_Volume
+      value: 0.6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 545f8c208778e493ea33fbfe96fac945, type: 2}
   m_IsPrefabParent: 0
@@ -968,7 +988,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Tumbler? Where''d the "e" go-
+  m_Text: 'Tumblr? Where''d the "e" go-
 
     Oh, what''s this picture?'
 --- !u!222 &704102760
@@ -977,6 +997,12 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 704102757}
+--- !u!114 &802279592 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114406313212515266, guid: 545f8c208778e493ea33fbfe96fac945,
+    type: 2}
+  m_PrefabInternal: {fileID: 58704063}
+  m_Script: {fileID: 11500000, guid: 1f48767b125f14ded8e72cef883a781c, type: 3}
 --- !u!1 &955127433
 GameObject:
   m_ObjectHideFlags: 0

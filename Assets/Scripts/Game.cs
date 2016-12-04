@@ -14,9 +14,14 @@ public class Game : MonoBehaviour
     public List<Word> outstandingNotUnderstoodWords { get; set; }
     public List<string> aggregatedEmotions { get; set; } // By occurrence.
 
+    [SerializeField]
+    private MusicManager musicManager;
+
     public bool isGameOver { get { return this.confusion + this.understanding >= this.confunderstansionMaxValue; } }
     
+    [SerializeField]
     private float understanding = 4;
+    [SerializeField]
     private float confusion = 4;
     public float Understanding { // NOTE: Since we're clamping to 0 on every call, some data will be lost when these are near 0.
         get { return this.understanding; }
@@ -59,6 +64,14 @@ public class Game : MonoBehaviour
             this.Confusion += Time.deltaTime * this.confusionRateOfIncrease;
         } else {
             this.EndGame();
+        }
+        // Dumb check for music.
+        if (this.understanding > this.confusion * 2 && this.understanding > 20) {
+            this.musicManager.Understanding();
+        } else if (this.understanding < this.confusion * 0.5 && this.confusion > 20) {
+            this.musicManager.Confused();
+        } else {
+            this.musicManager.Natural();
         }
     }
 

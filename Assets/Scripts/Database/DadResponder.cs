@@ -50,18 +50,22 @@ using System.Linq;
         public string GetOutputForCurrentState()
         {
             if (Game.Instance.myScorer.isInAdjectiveState) {
+                UnityEngine.GameObject.FindObjectOfType<DadSays>().IAmConfused();
                 return "But why do people like it?";
             }
             // Dad is hung up on an unknown word you used to describe something.
             if (Game.Instance.myScorer.AdditionalUnknownWord != null) {
+                UnityEngine.GameObject.FindObjectOfType<DadSays>().IAmConfused();
                 return string.Format("{0} what's {1}?", random.Random.Bool() ? "But" : "Wait,", Game.Instance.myScorer.AdditionalUnknownWord);
             }
             // Dad might understand in part, though he's not confused about a specific thing.
             if (Game.Instance.currentImage.linkedWords.Count > Game.Instance.outstandingNotUnderstoodWords.Count &&
                 Game.Instance.outstandingNotUnderstoodWords.Count > 0)
             {
+                UnityEngine.GameObject.FindObjectOfType<DadSays>().IKindaUnderstand();
                 return random.Random.Bool() ? "I still don't understand the picture..." : "I'm starting to get this picture?...";
             }
+
             return "ERROR ERROR ERROR I AM A ROBOT";
         }
 
@@ -74,21 +78,32 @@ using System.Linq;
         {
             string dadOutput;
             if (!Game.Instance.myScorer.isInAdjectiveState) {
-                dadOutput =
-                    Game.Instance.outstandingNotUnderstoodWords.Count > 1 ? "Well, if you say so. I don't get that one, though..." :
-                    Game.Instance.outstandingNotUnderstoodWords.Count > 0 ? "Okay, that's fine, I guess..." :
-                                                                            "Okay, I think I get it now.";
+                if (Game.Instance.outstandingNotUnderstoodWords.Count > 1) {
+                    dadOutput = "Well, if you say so. I don't get that one, though...";
+                    UnityEngine.GameObject.FindObjectOfType<DadSays>().IAmConfused();
+                } else if (Game.Instance.outstandingNotUnderstoodWords.Count > 0) {
+                    dadOutput = "Okay, that's fine, I guess...";
+                    UnityEngine.GameObject.FindObjectOfType<DadSays>().IKindaUnderstand();
+                } else
+                {
+                    dadOutput = "Okay, I think I get it now.";
+                    UnityEngine.GameObject.FindObjectOfType<DadSays>().IUnderstand();
+                }
             } else
             {
-                dadOutput =
-                    Game.Instance.myScorer.didAdjectiveSucceed ? "Oh, that makes sense." :
-                                                                 "Uh, if you say so...";
+                if (Game.Instance.myScorer.didAdjectiveSucceed) {
+                    dadOutput = "Oh, that makes sense.";
+                    UnityEngine.GameObject.FindObjectOfType<DadSays>().IUnderstand();
+                } else {
+                    dadOutput = "Uh, if you say so...";
+                    UnityEngine.GameObject.FindObjectOfType<DadSays>().IAmConfused();
+                }
                 Game.Instance.aggregatedEmotions.Add(Game.Instance.myScorer.adjectiveToldToDad);
                 Game.Instance.myScorer.isInAdjectiveState = false;
                 Game.Instance.myScorer.didAdjectiveSucceed = false;
                 Game.Instance.myScorer.adjectiveToldToDad = null;
             }
-            
+
             // Check this here in case the image is advanced before dad understands.
             Game.Instance.myScorer.CheckForImageEndBonusOrPenalty();
 
