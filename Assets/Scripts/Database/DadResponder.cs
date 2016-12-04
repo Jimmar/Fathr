@@ -21,6 +21,7 @@ using System.Linq;
         /// </summary>
         public static void Initialize() {
             instance = new DadResponder();
+            instance.ActuallyChangeImage(); // Get first image.
         }
 
         /// <summary>
@@ -32,7 +33,7 @@ using System.Linq;
         public bool SubmitPlayerInput(string sentenceType, List<string> inputWords, out string nextDadPhrase)
         {
             Game.Instance.myScorer.EvaluatePlayerPhrase(sentenceType, inputWords, Game.Instance.outstandingNotUnderstoodWords, Game.Instance.currentImage.linkedWords);
-            if (/*Game.Instance.CheckForImageComplete() || */sentenceType.Equals(SentenceType.NeverMindKeepGoing, StringComparison.OrdinalIgnoreCase)) {
+            if (Game.Instance.myScorer.CheckForImageComplete() || sentenceType.Equals(SentenceType.NeverMindKeepGoing, StringComparison.OrdinalIgnoreCase)) {
                 nextDadPhrase = this.AdvanceImage();
                 return true;
             } else {
@@ -58,17 +59,23 @@ using System.Linq;
         /// </summary>
         private string AdvanceImage()
         {
-            throw new NotImplementedException();
             string dadOutput =
-                Game.Instance.outstandingNotUnderstoodWords.Count > 1 ? "Well, if you say so..." :
+                Game.Instance.outstandingNotUnderstoodWords.Count > 1 ? "Well, if you say so. I don't get that one, though..." :
                 Game.Instance.outstandingNotUnderstoodWords.Count > 0 ? "Okay, that's fine, I guess." :
-                "Okay, I think I get it now.";
+                                                                        "Okay, I think I get it now.";
+            // Check this here in case the image is advanced before dad understands.
+            Game.Instance.myScorer.CheckForImageEndBonusOrPenalty();
 
+            this.ActuallyChangeImage();
+
+            Game.Instance.myScorer.ResetForNewImage();
+            return dadOutput;
+        }
+        private void ActuallyChangeImage()
+        {
             Game.Instance.currentImage = Database.Instance.GetUnusedImage();
             Game.Instance.outstandingNotUnderstoodWords.Clear();
             Game.Instance.outstandingNotUnderstoodWords.AddRange(Game.Instance.currentImage.linkedWords.Select(word => word.word));
-
-
         }
 
         #region Singleton management
