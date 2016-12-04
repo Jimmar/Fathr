@@ -5,14 +5,15 @@ using System.Collections.Generic;
 
 public class SentanceFormer : MonoBehaviour {
 
-	string []sentencesList = {"It's like _ but _", "Do you remember _ ?", "It's the same thing as _"};
+	string []sentencesList;
 	int sentanceIndex = 0;
 	[SerializeField] GameObject wordSpot;
 	[SerializeField] GameObject wordBlock;
 	// Use this for initialization
 	void Start () {
-		DisplaySentance(sentencesList[sentanceIndex]);
 		sentencesList = database.SentenceType.sentanceArray;
+		sentanceIndex = Random.Range(0,sentencesList.Length);
+		DisplaySentance(sentencesList[sentanceIndex]);
 	}
 	
 	// Update is called once per frame
@@ -87,5 +88,6 @@ public class SentanceFormer : MonoBehaviour {
 		print(output);
 
 		GameObject.Find("GameManager").GetComponent<GameManager>().DadSays(output);
+		NextSentance();
 	}
 }

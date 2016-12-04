@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class WordPlacement : MonoBehaviour {
 	[SerializeField] GameObject blockPrefab;
@@ -17,6 +18,7 @@ public class WordPlacement : MonoBehaviour {
 	}
 
 	public void GenerateWords(string []words){
+		DeleteAllChildren();
 		for (int i=0; i<words.Length;i++){
 			Transform newWordBlock = Instantiate(blockPrefab, transform.position, transform.rotation).transform;
 			newWordBlock.GetComponentInChildren<Text>().text = words[i];
@@ -26,6 +28,12 @@ public class WordPlacement : MonoBehaviour {
 			newWordBlock.position = newPos;
 			newWordBlock.SetParent(transform);
 		}
+	}
+
+	private void DeleteAllChildren(){
+		var children = new List<GameObject>();
+		foreach (Transform child in transform) {children.Add(child.gameObject);};
+		children.ForEach(child => Destroy(child));
 	}
 
 	
