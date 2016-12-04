@@ -26,9 +26,9 @@ using System.Linq;
         /// Handle the player input phrase. This will update dad's understanding of any words involved.
         /// Afterwards, use GetOutputForCurrentState to retrieve the next string.
         /// </summary>
-        /// <param name="sentenceType">The sentence template used for this submission.</param>
+        /// <param name="sentenceType">The sentence template used for this submission. Use SentenceType strings.</param>
         /// <param name="inputWords">The words that the player filled in. Separated by strings, not literal words. (E.g. "video games" is one string).</param>
-        public void SubmitPlayerInput(SentenceType sentenceType, List<string> inputWords)
+        public void SubmitPlayerInput(string sentenceType, List<string> inputWords)
         {
             Game.Instance.myScorer.EvaluatePlayerPhrase(sentenceType, inputWords, Game.Instance.outstandingNotUnderstoodWords, Game.Instance.currentImage.linkedWords);
 
