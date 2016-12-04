@@ -20,6 +20,8 @@
         public const string ItsThreeBlanks = "It's _ with _ and _ .";
         public const string IfYouMixTheseThree = "If you mixed _ , _ and _ you'd get that.";
 
+        public const string Adjective = "Because it's _ .";
+
         public static string []sentanceArray = {NeverMindKeepGoing,
                                                 ItsJustBlank,
                                                 ItsSimilarToBlank,

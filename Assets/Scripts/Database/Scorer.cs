@@ -27,11 +27,9 @@ using Word = Database.Word;
             this.additionalUnknownWords.Clear();
         }
 
-        [Flags]
-        public enum ScoreState
-        {
-
-        }
+        public bool isInAdjectiveState = false;
+        public bool didAdjectiveSucceed = false;
+        public string adjectiveToldToDad = null;
 
         /// <summary>
         /// Updates the understood words based on the input phrase. Check the Word objects in the database for their UnderstandingBase.
@@ -40,8 +38,19 @@ using Word = Database.Word;
         /// <param name="inputWords">The words used by the player, divided by the Words and not literal words. (E.g. "video games" is one Word.)</param>
         /// <param name="currentNotUnderstoodWords">All words active on the current image that dad doesn't understand. These are the words to be updated.</param>
         /// <param name="imageWords">The Word objects associated with the current image.</param>
-        public void EvaluatePlayerPhrase(string sentenceType, List<string> inputWords, List<Word> currentNotUnderstoodWords, List<Database.LinkedWord> imageWords)
+        public void EvaluatePlayerPhrase(string sentenceType, List<string> inputWords, List<Word> currentNotUnderstoodWords, Database.Image image)
         {
+            if (this.isInAdjectiveState) {
+                this.didAdjectiveSucceed = Game.Instance.currentImage.linkedDescriptors.Select(ld => ld.word).Contains(inputWords[0]);
+                if (!this.didAdjectiveSucceed) {
+                    Game.Instance.Confusion += 6;
+                } else {
+                    Game.Instance.Understanding += 3;
+                }
+                this.adjectiveToldToDad = inputWords[0];
+                return;
+            }
+
             // workarounds since currentNotUnderstoodWords is outstandingNotUnderstoodWords.
             int originalCount = currentNotUnderstoodWords.Count; // Technically going to modify the collection when adding to outstandingNotUnderstoodWords.
             List<Word> originalNotUnderstoodWords = currentNotUnderstoodWords.GetRange(0, originalCount);
@@ -69,7 +78,7 @@ using Word = Database.Word;
                         // Add the new word to the image, adding a weight based on its relationship to the word that begat it, unless dad already knows it.
                         double requiredWeight = 
                             currentWord.linkedWords.Where(word => word.word.Equals(inputWord)).First().weight * 
-                            imageWords.Where(word => word.word.Equals(currentWord.word)).First().weight;
+                            image.linkedWords.Where(word => word.word.Equals(currentWord.word)).First().weight;
                         if (inputWordObj.understandingCurrent < requiredWeight)
                         {
                             this.additionalUnknownWords.Add(new LinkedWord(inputWord, requiredWeight));
@@ -89,15 +98,33 @@ using Word = Database.Word;
             {
                 Word currentWord = originalNotUnderstoodWords[i];
                 // Just gonna make recursive words not contribute here, since they'll add to confusion later.
-                if (imageWords.Where(word => word.word.Equals(currentWord.word)).Count() > 0) {
-                    double delta = currentWord.understandingCurrent - imageWords.Where(word => word.word.Equals(currentWord.word)).First().weight;
+                if (image.linkedWords.Where(word => word.word.Equals(currentWord.word)).Count() > 0) {
+                    double delta = currentWord.understandingCurrent - image.linkedWords.Where(word => word.word.Equals(currentWord.word)).First().weight;
                     this.DetermineConfunderstansionChangeForWord(delta, currentWord.understandingCurrent, sentenceType);
                 }
             }
+            // Check the descriptors of used words and apply them.
+            for (int i = 0; i < inputWords.Count; i++) {
+                for (int j = 0; j < image.linkedDescriptors.Count; j++)
+                {
+                    Word inputWord;
+                    if (Database.Instance.TryGetWord(inputWords[i], out inputWord))
+                    {
+                        if (inputWord.linkedDescriptors.Select(lw => lw.word).Contains(image.linkedDescriptors[j].word)) {
+                            image.linkedDescriptors[j].isDescriptorAssociated = true;
+                        }
+                        //var sharedDescriptors = image.linkedDescriptors[j]..Where(dptor => inputWord.linkedDescriptors.Contains(dptor));
+                        //foreach (Database.LinkedWord sharedDescriptor in sharedDescriptors) {
+                        //    sharedDescriptor.isDescriptorAssociated = true;
+                       // }
+                    }
+                }
+            }
+
             // Update the not understood words list to remove words that are now understood.
             for (int i = 0; i < currentNotUnderstoodWords.Count; i++)
             {
-                Database.LinkedWord correspondingImageWord = imageWords.Where(word => word.word.Equals(currentNotUnderstoodWords[i].word)).FirstOrDefault();
+                Database.LinkedWord correspondingImageWord = image.linkedWords.Where(word => word.word.Equals(currentNotUnderstoodWords[i].word)).FirstOrDefault();
                 correspondingImageWord = correspondingImageWord ?? this.additionalUnknownWords.Where(word => word.word.Equals(currentNotUnderstoodWords[i].word)).FirstOrDefault();
                 if (correspondingImageWord != null)
                 {
@@ -180,8 +207,16 @@ using Word = Database.Word;
         /// <returns></returns>
         public bool CheckForImageComplete()
         {
-            // TODO: Check for adjectives.
-            return Game.Instance.outstandingNotUnderstoodWords == null || Game.Instance.outstandingNotUnderstoodWords.Count == 0; // Shouldn't be null here, but...
+            bool hasExhaustedWords = Game.Instance.outstandingNotUnderstoodWords == null || Game.Instance.outstandingNotUnderstoodWords.Count == 0; // Shouldn't be null here, but...
+            if (hasExhaustedWords && !this.isInAdjectiveState)
+            {
+                var imageDescriptors = Game.Instance.currentImage.linkedDescriptors.Where(ld => ld.isDescriptorAssociated);
+                if (imageDescriptors.Count() == 0) {
+                    this.isInAdjectiveState = true;
+                    return false;
+                }
+            }
+            return hasExhaustedWords;
         }
 
         /// <summary>

@@ -1,0 +1,21 @@
+<WordRoot>
+  <BaseWord word="yoga">
+    <LinkedWords>
+      <Link word="stretching" weight="1.0"/>
+      <Link word="exercise" weight="1.0"/>
+      <Link word="meditation" weight="1.0"/>
+      <Link word="relaxing" weight="0.7"/>
+      <Link word="abs" weight="0.7"/>
+      <Link word="strong" weight="0.6"/>
+      <Link word="sweat" weight="0.5"/>
+      <Link word="sports" weight="0.4"/>
+      <Link word="dance" weight="0.2"/>
+    </LinkedWords>
+    <Descriptors>
+      <Link word="calm" weight="1.0"/>
+      <Link word="challenging" weight="0.7"/>
+    </Descriptors>
+    <UnderstandingBase>0.1</UnderstandingBase>
+    <UnderstoodByDadType>0</UnderstoodByDadType>
+  </BaseWord>
+</WordRoot>

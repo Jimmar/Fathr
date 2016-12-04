@@ -24,5 +24,19 @@
       <Link word="American" weight="0"/>
       <Link word="wholesome" weight="0"/>
     </LinkedWords>
+    <Descriptors>
+      <Link word="lazy" weight="0"/>
+      <Link word="terrible" weight="0"/>
+      <Link word="tasty" weight="0"/>
+      <Link word="cool" weight="0"/>
+      <Link word="cute" weight="0"/>
+      <Link word="sweet" weight="0"/>
+      <Link word="sassy" weight="0"/>
+      <Link word="funny" weight="0"/>
+      <Link word="ironic" weight="0"/>
+      <Link word="colorful" weight="0"/>
+      <Link word="inspirational" weight="0"/>
+      <Link word="nostalgic" weight="0"/>
+    </Descriptors>
   </BaseWord>
 </WordRoot>

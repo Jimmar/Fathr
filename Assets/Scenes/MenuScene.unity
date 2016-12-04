@@ -856,7 +856,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: What is this ?
+  m_Text: 'Tumbler? Where''d the "e" go-
+
+    Oh, what''s this picture?'
 --- !u!222 &704102760
 CanvasRenderer:
   m_ObjectHideFlags: 0

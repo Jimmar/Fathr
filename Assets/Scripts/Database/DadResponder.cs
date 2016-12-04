@@ -1,6 +1,7 @@
 ﻿namespace database
 {
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -32,7 +33,7 @@ using System.Linq;
         /// <param name="nextDadPhrase">Out param. The next thing for dad to say will be assigned here regardless of return value.</param>
         public bool SubmitPlayerInput(string sentenceType, List<string> inputWords, out string nextDadPhrase)
         {
-            Game.Instance.myScorer.EvaluatePlayerPhrase(sentenceType, inputWords, Game.Instance.outstandingNotUnderstoodWords, Game.Instance.currentImage.linkedWords);
+            Game.Instance.myScorer.EvaluatePlayerPhrase(sentenceType, inputWords, Game.Instance.outstandingNotUnderstoodWords, Game.Instance.currentImage);
             if (Game.Instance.myScorer.CheckForImageComplete() || sentenceType.Equals(SentenceType.NeverMindKeepGoing, StringComparison.OrdinalIgnoreCase)) {
                 nextDadPhrase = this.AdvanceImage();
                 return true;
@@ -48,12 +49,15 @@ using System.Linq;
         /// <returns>Output string.</returns>
         public string GetOutputForCurrentState()
         {
+            if (Game.Instance.myScorer.isInAdjectiveState) {
+                return "But why do people like it?";
+            }
             // Dad is hung up on an unknown word you used to describe something.
             if (Game.Instance.myScorer.AdditionalUnknownWord != null) {
                 return string.Format("{0} what's {1}?", random.Random.Bool() ? "But" : "Wait,", Game.Instance.myScorer.AdditionalUnknownWord);
             }
             // Dad might understand in part, though he's not confused about a specific thing.
-            else if (Game.Instance.currentImage.linkedWords.Count > Game.Instance.outstandingNotUnderstoodWords.Count &&
+            if (Game.Instance.currentImage.linkedWords.Count > Game.Instance.outstandingNotUnderstoodWords.Count &&
                 Game.Instance.outstandingNotUnderstoodWords.Count > 0)
             {
                 return random.Random.Bool() ? "I still don't understand the picture..." : "I'm starting to get this picture?...";
@@ -68,16 +72,31 @@ using System.Linq;
         /// </summary>
         private string AdvanceImage()
         {
-            string dadOutput =
-                Game.Instance.outstandingNotUnderstoodWords.Count > 1 ? "Well, if you say so. I don't get that one, though..." :
-                Game.Instance.outstandingNotUnderstoodWords.Count > 0 ? "Okay, that's fine, I guess." :
-                                                                        "Okay, I think I get it now.";
+            string dadOutput;
+            if (!Game.Instance.myScorer.isInAdjectiveState) {
+                dadOutput =
+                    Game.Instance.outstandingNotUnderstoodWords.Count > 1 ? "Well, if you say so. I don't get that one, though..." :
+                    Game.Instance.outstandingNotUnderstoodWords.Count > 0 ? "Okay, that's fine, I guess..." :
+                                                                            "Okay, I think I get it now.";
+            } else
+            {
+                dadOutput =
+                    Game.Instance.myScorer.didAdjectiveSucceed ? "Oh, that makes sense." :
+                                                                 "Uh, if you say so...";
+                Game.Instance.aggregatedEmotions.Add(Game.Instance.myScorer.adjectiveToldToDad);
+                Game.Instance.myScorer.isInAdjectiveState = false;
+                Game.Instance.myScorer.didAdjectiveSucceed = false;
+                Game.Instance.myScorer.adjectiveToldToDad = null;
+            }
+            
             // Check this here in case the image is advanced before dad understands.
             Game.Instance.myScorer.CheckForImageEndBonusOrPenalty();
 
             this.ActuallyChangeImage();
 
             Game.Instance.myScorer.ResetForNewImage();
+            // Hack to animate the next phrase.
+            Game.Instance.StartCoroutine(this.WaitForNewPhrase());
             return dadOutput;
         }
         private void ActuallyChangeImage()
@@ -85,6 +104,12 @@ using System.Linq;
             Game.Instance.currentImage = Database.Instance.GetUnusedImage();
             Game.Instance.outstandingNotUnderstoodWords.Clear();
             Game.Instance.outstandingNotUnderstoodWords.AddRange(Game.Instance.currentImage.linkedWords.Select(word => Database.Instance.GetOrCreateWord(word.word))); // GetOrCreate is so that words that dad is assumed to understand will just get added automatically.
+        }
+
+        private IEnumerator WaitForNewPhrase()
+        {
+            yield return new UnityEngine.WaitForSeconds(2.1f);
+            UnityEngine.GameObject.FindObjectOfType<GameManager>().DadSays("Now what's this one?", false);
         }
 
         #region Singleton management

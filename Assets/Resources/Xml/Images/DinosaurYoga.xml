@@ -1,0 +1,13 @@
+<WordRoot>
+  <Image fileName="DinoYoga">
+    <LinkedWords>
+      <Link word="dinosaur" weight="0.5"/>
+      <Link word="girl" weight="0.5"/>
+      <Link word="yoga" weight="0.5"/>
+    </LinkedWords>
+    <Descriptors>
+      <Link word="cute" weight="1.0"/>
+      <Link word="funny" weight="0.4"/>
+    </Descriptors>
+  </Image>
+</WordRoot>

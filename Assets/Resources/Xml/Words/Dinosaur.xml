@@ -1,0 +1,19 @@
+<WordRoot>
+  <BaseWord word="dinosaur">
+    <LinkedWords>
+      <Link word="dinosaur" weight="1.0"/>
+      <Link word="monster" weight="0.4"/>
+      <Link word="lizard" weight="0.4"/>
+      <Link word="creature" weight="0.1"/>
+      <Link word="animal" weight="0.1"/>
+      <Link word="bird" weight="0.1"/>
+      <Link word="raptor" weight="0.1"/>
+    </LinkedWords>
+    <Descriptors>
+      <Link word="cool" weight="1.0"/>
+      <Link word="old" weight="0.2"/>
+    </Descriptors>
+    <UnderstandingBase>0.4</UnderstandingBase>
+    <UnderstoodByDadType>0</UnderstoodByDadType>
+  </BaseWord>
+</WordRoot>
