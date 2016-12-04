@@ -9,9 +9,9 @@ public class Game : MonoBehaviour
 {
     public database.Database.Image currentImage = null;
     [HideInInspector]
-    public List<string> outstandingNotUnderstoodWords = new List<string>();
+    public List<string> outstandingNotUnderstoodWords { get; set; }
 
-    public bool isGameOver { get { return this.confusion >= this.understanding; } }
+    public bool isGameOver { get { return this.confusion + this.understanding >= this.confunderstansionMaxValue; } }
 
     [SerializeField]
     private float understanding = 0;
@@ -21,16 +21,17 @@ public class Game : MonoBehaviour
     public float Confusion { get { return this.confusion; } set { this.confusion = Mathf.Clamp(value, 0f, this.confunderstansionMaxValue); } }
     [SerializeField]
     [Tooltip("The amount by which confusion should increase by default every second.")]
-    private float confusionRateOfIncrease;
+    private float confusionRateOfIncrease = 0.05f;
     [SerializeField]
     [Tooltip("The maximum numeric amount for both confusion and understanding. This is the amount that would fill up either bar on its own.")]
-    private float confunderstansionMaxValue;
+    private float confunderstansionMaxValue = 100f;
     
     public database.Scorer myScorer { get; private set; }
 
     public void Awake() // Awake so it can be used in Start elsewhere.
     {
         instance = this;
+        this.outstandingNotUnderstoodWords = new List<string>();
         database.Database.Initialize();
         this.myScorer = new database.Scorer();
         database.DadResponder.Initialize();

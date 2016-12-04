@@ -13,6 +13,7 @@ using Word = Database.Word;
         private delegate void PreviousEvaluation(); // Should bake in the lists.
         private List<PreviousEvaluation> previousEvaluations = new List<PreviousEvaluation>();
         private Stack<Word> wordstoUpdate = new Stack<Word>(); // Stack so that we can retrieve not understood words in order.
+        public Stack<Word> WordsToUpdate { get { return this.wordstoUpdate; } }
         
         public void ResetForNewImage()
         {
@@ -103,7 +104,7 @@ using Word = Database.Word;
                 sentenceType.Equals(SentenceType.IfYouMixTheseThree) || sentenceType.Equals(SentenceType.ItsThreeBlanks) ? 1.2 :
                 1.0;
             if (deltaCurrentToGoalUnderstanding >= 0.0) { // This will trigger once when the word is understood, since it's then removed from the notUnderstoodList.
-                Game.Instance.Understanding += (float)(multiplier * 3.0); // 3 is arbitrary for now, high enough to work towards game end.
+                Game.Instance.Understanding += (float)(multiplier * 2.0); // 2 is arbitrary for now, high enough to work towards game end.
                 Game.Instance.Confusion -= (float)(multiplier * 2.0);
             } else if (deltaCurrentToGoalUnderstanding >= -0.2) {
                 Game.Instance.Confusion += (float)(multiplier * 0.5);
@@ -155,7 +156,13 @@ using Word = Database.Word;
         /// </summary>
         public void CheckForImageEndBonusOrPenalty()
         {
-
+            if (Game.Instance.outstandingNotUnderstoodWords.Count == 0) {
+                Game.Instance.Understanding += 3.0f;
+            } else {
+                for (int i = 0; i < Game.Instance.outstandingNotUnderstoodWords.Count; i++) {
+                    Game.Instance.Confusion += 1.0f - (float)Database.Instance.GetWord(Game.Instance.outstandingNotUnderstoodWords[i]).understandingCurrent;
+                }
+            }
         }
     }
 }

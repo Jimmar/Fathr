@@ -43,12 +43,19 @@ using System.Linq;
         }
 
         /// <summary>
-        /// Get the thing that dad should say now,
+        /// Get the thing that dad should say now. Not called when the image is changing.
         /// </summary>
         /// <returns>Output string.</returns>
         public string GetOutputForCurrentState()
         {
-
+            // So many ToList calls! This isn't a looker, this here code.
+            if        (Game.Instance.currentImage.linkedWords.Select(word => word.word).ToList().ScrambledEquals(Game.Instance.outstandingNotUnderstoodWords.ToList())) {
+                // You have not gotten dad to understand any of the words.
+                return "Okay, go on...";
+            } else {
+                Database.Word nextNotUnderstoodWord = Game.Instance.myScorer.WordsToUpdate.Where(word => word.understandingCurrent < Game.Instance.currentImage.linkedWords.Where(linkedWord => linkedWord.Equals(word)).First().weight).Last();
+                return string.Format("But what is {0}?", nextNotUnderstoodWord.word);
+            }
             return "ERROR ERROR ERROR I AM A ROBOT";
         }
 
