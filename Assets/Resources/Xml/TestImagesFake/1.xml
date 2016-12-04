@@ -1,0 +1,12 @@
+<!--Note that this one's used for unit tests, so keep that in mind when modifying.-->
+<WordRoot>
+  <Image fileName="1">
+    <LinkedWords>
+      <link word="one" weight="1.0"/>
+      <link word="number" weight="0.5"/>
+    </LinkedWords>
+    <Descriptors>
+      <Link word="first" weight="1.0"/>
+    </Descriptors>
+  </Image>
+</WordRoot>
