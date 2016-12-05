@@ -7,7 +7,6 @@
       <Link word="person" weight="0.5"/>
       <Link word="chick" weight="0.1"/>
       <Link word="mom" weight="0.1"/>
-      <Link word="AAAAAAAAAAAAAAAA" weight="0.0"/>
     </LinkedWords>
     <Descriptors>
       <Link word="nice" weight="1.0"/>
