@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Word = database.Database.Word;
@@ -18,6 +19,7 @@ public class Game : MonoBehaviour
     private MusicManager musicManager;
 
     public bool isGameOver { get { return this.confusion + this.understanding >= this.confunderstansionMaxValue; } }
+    private bool hasEnded = false;
     
     [SerializeField]
     private float understanding = 4;
@@ -60,6 +62,9 @@ public class Game : MonoBehaviour
 
     public void Update()
     {
+        if (this.hasEnded)
+            return;
+
         if (!this.isGameOver) {
             this.Confusion += Time.deltaTime * this.confusionRateOfIncrease;
         } else {
@@ -77,6 +82,7 @@ public class Game : MonoBehaviour
 
     private void EndGame()
     {
+        this.hasEnded = true;
         string resultString = "";
         string prevalentEmotion = this.aggregatedEmotions.Count > 0 ? 
             this.aggregatedEmotions[random.Random.Range(0, this.aggregatedEmotions.Count)] :
@@ -92,6 +98,19 @@ public class Game : MonoBehaviour
 
         GameManager gameManager = GameObject.FindObjectOfType<GameManager>();
         gameManager.DadSays(resultString);
+
+        this.StartCoroutine(this.WaitToEnd());
+    }
+
+    private IEnumerator WaitToEnd()
+    {
+        GameObject.FindObjectOfType<Dad>().DadLeaves();
+        yield return new WaitForSeconds(3.0f);
+        if (this.understanding > this.confusion) {
+            GameObject.FindObjectOfType<WinLose>().Win();
+        } else {
+            GameObject.FindObjectOfType<WinLose>().Lose();
+        }
     }
 
     #region Singleton management
