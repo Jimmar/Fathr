@@ -1,5 +1,5 @@
 <WordRoot>
-  <BaseWord word="mario">
+  <BaseWord word="Mario">
     <LinkedWords>
       <Link word="jumping" weight="0.8"/>
       <Link word="moustache" weight="0.6"/>
