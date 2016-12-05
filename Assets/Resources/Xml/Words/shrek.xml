@@ -1,0 +1,22 @@
+<WordRoot>
+  <BaseWord word="Shrek">
+    <LinkedWords>
+      <Link word="ogre" weight="0.9"/>
+      <Link word="cartoon" weight="0.7"/>
+      <Link word="swamp" weight="0.6"/>
+      <Link word="smash mouth" weight="1.0"/>
+      <Link word="fairy tales" weight="0.4"/>
+      <Link word="gross" weight="0.6"/>
+      <Link word="donkey" weight="0.6"/>
+      <Link word="adventure" weight="0.6"/>
+      <Link word="mike meyers" weight="0.2"/>
+
+    </LinkedWords>
+    <Descriptors>
+      <Link word="funny" weight="1.0"/>
+      <Link word="ironic" weight="1.0"/>
+    </Descriptors>
+    <UnderstandingBase>0.4</UnderstandingBase>
+    <UnderstoodByDadType>0</UnderstoodByDadType>
+  </BaseWord>
+</WordRoot>

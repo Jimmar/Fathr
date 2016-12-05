@@ -1,0 +1,16 @@
+<WordRoot>
+  <BaseWord word="Nintendo">
+    <LinkedWords>
+      <Link word="video games" weight="1.0"/>
+      <Link word="Mario" weight="0.9"/>
+      <Link word="Waluigi" weight="0.9"/>
+      <Link word="Nintendo" weight="1.0"/>
+      <Link word="Sonic" weight="0.1"/>
+    </LinkedWords>
+    <Descriptors>
+      <Link word="fun" weight="1.0"/>
+    </Descriptors>
+    <UnderstandingBase>0.3</UnderstandingBase>
+    <UnderstoodByDadType>0</UnderstoodByDadType>
+  </BaseWord>
+</WordRoot>

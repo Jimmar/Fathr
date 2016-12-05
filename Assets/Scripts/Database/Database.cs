@@ -39,7 +39,7 @@
             [XmlElement("UnderstandingBase")]
             public double understanding { get; set; }
             [XmlElement("UnderstoodByDadType")]
-            public short understoodByDadType { get; private set; }
+            public double understoodByDadType { get; private set; }
             /// <summary>Tracks understanding as it's changed for the current image, and then this is assigned to understanding.</summary>
             public double understandingCurrent { get; set; }
 

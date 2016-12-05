@@ -1,0 +1,11 @@
+<WordRoot>
+  <Image fileName="17_">
+    <LinkedWords>
+      <Link word="Mario" weight="1.0"/>
+      <Link word="shaving" weight="0.4"/>
+    </LinkedWords>
+    <Descriptors>
+      <Link word="creepy" weight="1.0"/>
+    </Descriptors>
+  </Image>
+</WordRoot>

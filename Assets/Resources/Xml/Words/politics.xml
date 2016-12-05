@@ -1,0 +1,19 @@
+<WordRoot>
+  <BaseWord word="politics">
+    <LinkedWords>
+      <Link word="president" weight="1.0"/>
+      <Link word="vice president" weight="1.0"/>
+      <Link word="election" weight="0.7"/>
+      <Link word="government" weight="0.7"/>
+      <Link word="Obama" weight="0.5"/>
+      <Link word="Biden" weight="0.5"/>
+      <Link word="bromance" weight="0.4"/>
+    </LinkedWords>
+    <Descriptors>
+      <Link word="silly" weight="1.0"/>
+      <Link word="funny" weight="0.5"/>
+    </Descriptors>
+    <UnderstandingBase>1</UnderstandingBase>
+    <UnderstoodByDadType>0</UnderstoodByDadType>
+  </BaseWord>
+</WordRoot>

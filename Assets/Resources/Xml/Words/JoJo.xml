@@ -1,0 +1,22 @@
+<WordRoot>
+  <BaseWord word="Jojo's Bizarre Adventure">
+    <LinkedWords>
+      <Link word="Japanese" weight="1.0"/>
+      <Link word="Anime" weight="1.0"/>
+      <Link word="Shounen" weight="0.8"/>
+      <Link word="muscles" weight="0.7"/>
+      <Link word="ghosts" weight="0.5"/>
+      <Link word="fighting" weight="0.5"/>
+      <Link word="posing" weight="0.4"/>
+      <Link word="superhero" weight="0.3"/>
+      <Link word="magical girls" weight="0.3"/>
+      <Link word="sports" weight="0.1"/>
+    </LinkedWords>
+    <Descriptors>
+      <Link word="funny" weight="1.0"/>
+      <Link word="cool" weight="0.5"/>
+    </Descriptors>
+    <UnderstandingBase>0</UnderstandingBase>
+    <UnderstoodByDadType>0</UnderstoodByDadType>
+  </BaseWord>
+</WordRoot>

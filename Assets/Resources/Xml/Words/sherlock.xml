@@ -1,0 +1,18 @@
+<WordRoot>
+  <BaseWord word="sherlock">
+    <LinkedWords>
+      <Link word="sherlock holmes" weight="0.9"/>
+      <Link word="mystery" weight="0.8"/>
+      <Link word="benedict cumberbatch" weight="0.6"/>
+      <Link word="british" weight="0.8"/>
+      <Link word="adventure" weight="0.4"/>
+      <Link word="detective" weight="0.2"/>
+
+    </LinkedWords>
+    <Descriptors>
+      <Link word="exciting" weight="1.0"/>
+    </Descriptors>
+    <UnderstandingBase>0.5</UnderstandingBase>
+    <UnderstoodByDadType>0</UnderstoodByDadType>
+  </BaseWord>
+</WordRoot>

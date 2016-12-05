@@ -1,0 +1,20 @@
+<WordRoot>
+  <BaseWord word="meme">
+    <LinkedWords>
+      <Link word="funny" weight="1.0"/>
+      <Link word="joke" weight="1.0"/>
+      <Link word="internet" weight="0.7"/>
+      <Link word="lolz" weight="0.5"/>
+      <Link word="dumb" weight="0.5"/>
+      <Link word="viral" weight="0.4"/>
+      <Link word="grumpy cat" weight="0.3"/>
+    </LinkedWords>
+    <Descriptors>
+      <Link word="silly" weight="1.0"/>
+      <Link word="funny" weight="1.0"/>
+      <Link word="cute" weight="0.4"/>
+    </Descriptors>
+    <UnderstandingBase>0</UnderstandingBase>
+    <UnderstoodByDadType>0</UnderstoodByDadType>
+  </BaseWord>
+</WordRoot>

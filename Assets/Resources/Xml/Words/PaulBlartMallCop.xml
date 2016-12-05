@@ -1,0 +1,18 @@
+<WordRoot>
+  <BaseWord word="Paul Blart Mall Cop">
+    <LinkedWords>
+      <Link word="bad movie" weight="1.0"/>
+      <Link word="comedy" weight="1.0"/>
+      <Link word="shopping" weight="0.5"/>
+      <Link word="heist" weight="0.7"/>
+      <Link word="fat guy" weight="0.5"/>
+      <Link word="Kevin James" weight="0.8"/>
+    </LinkedWords>
+    <Descriptors>
+      <Link word="funny" weight="1.0"/>
+      <Link word="sad" weight="1.0"/>
+    </Descriptors>
+    <UnderstandingBase>0.2</UnderstandingBase>
+    <UnderstoodByDadType>0.2</UnderstoodByDadType>
+  </BaseWord>
+</WordRoot>
