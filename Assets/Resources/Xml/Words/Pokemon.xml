@@ -1,0 +1,20 @@
+<WordRoot>
+  <BaseWord word="Pokemon">
+    <LinkedWords>
+      <Link word="animals" weight="0.3"/>
+      <Link word="video games" weight="1.0"/>
+      <Link word="Nintendo" weight="1.0"/>
+      <Link word="Pikachu" weight="0.8"/>
+      <Link word="battles" weight="1.0"/>
+      <Link word="trainer" weight="1.0"/>
+      <Link word="furry" weight="0.1"/>
+      <Link word="Anime" weight="0.3"/>
+    </LinkedWords>
+    <Descriptors>
+      <Link word="fun" weight="1.0"/>
+      <Link word="cute" weight="0.8"/>
+    </Descriptors>
+    <UnderstandingBase>.6</UnderstandingBase>
+    <UnderstoodByDadType>0.6</UnderstoodByDadType>
+  </BaseWord>
+</WordRoot>

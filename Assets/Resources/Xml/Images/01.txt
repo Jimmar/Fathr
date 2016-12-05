@@ -1,0 +1,12 @@
+<WordRoot>
+  <Image fileName="01">
+    <LinkedWords>
+      <Link word="Sonic" weight="0.4"/>
+      <Link word="dad joke" weight="0.1"/>
+      <Link word="video games" weight="0.2"/>
+    </LinkedWords>
+    <Descriptors>
+      <Link word="funny" weight="1.0"/>
+    </Descriptors>
+  </Image>
+</WordRoot>

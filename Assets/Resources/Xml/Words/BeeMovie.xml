@@ -1,0 +1,16 @@
+<WordRoot>
+  <BaseWord word="Bee Movie">
+    <LinkedWords>
+      <Link word="cartoon" weight="1.0"/>
+      <Link word="bee" weight="1.0"/>
+      <Link word="Cars" weight="0.3"/>
+      <Link word="Seinfeld" weight="0.2"/>
+      <Link word="movie" weight="0.5"/>
+    </LinkedWords>
+    <Descriptors>
+      <Link word="dumb" weight="1.0"/>
+    </Descriptors>
+    <UnderstandingBase>0</UnderstandingBase>
+    <UnderstoodByDadType>0</UnderstoodByDadType>
+  </BaseWord>
+</WordRoot>

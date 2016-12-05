@@ -24,7 +24,6 @@ public class WinLose : MonoBehaviour {
 		GetComponent<Animation>().Play();
 		audioSource.clip = winClip;
 		audioSource.Play();
-
 	}
 
 	public void Lose(){

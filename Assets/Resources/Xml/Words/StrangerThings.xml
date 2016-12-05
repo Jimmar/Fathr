@@ -1,0 +1,16 @@
+<WordRoot>
+  <BaseWord word="Stranger Things">
+    <LinkedWords>
+      <Link word="eighties" weight="1.0"/>
+      <Link word="sci-fi" weight="0.8"/>
+      <Link word="eggos" weight="0.5"/>
+      <Link word="children" weight="0.2"/>
+    </LinkedWords>
+    <Descriptors>
+      <Link word="cool" weight="1.0"/>
+      <Link word="exciting" weight="0.5"/>
+    </Descriptors>
+    <UnderstandingBase>0.5</UnderstandingBase>
+    <UnderstoodByDadType>0</UnderstoodByDadType>
+  </BaseWord>
+</WordRoot>

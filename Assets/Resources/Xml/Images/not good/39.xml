@@ -1,0 +1,12 @@
+<WordRoot>
+  <Image fileName="39">
+    <LinkedWords>
+      <Link word="Supernatural" weight="0.5"/>
+      <Link word="Doctor Who" weight="0.5"/>
+      <Link word="Sherlock Holmes" weight="0.5"/>
+    </LinkedWords>
+    <Descriptors>
+      <Link word="sexy" weight="1.0"/>
+    </Descriptors>
+  </Image>
+</WordRoot>
