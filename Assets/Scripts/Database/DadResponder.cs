@@ -63,7 +63,11 @@ using System.Linq;
                 Game.Instance.outstandingNotUnderstoodWords.Count > 0)
             {
                 UnityEngine.GameObject.FindObjectOfType<DadSays>().IKindaUnderstand();
-                return random.Random.Bool() ? "I still don't understand the picture..." : "I'm starting to get this picture?...";
+                int rand = random.Random.Range(0, 4);
+                return rand == 0 ? "I still don't understand the picture..." :
+                    rand == 1 ? "I'm starting to get this picture?..." :
+                    rand == 2 ? "Maybe? That sounds...umm..." :
+                    "Really? I don't see it...";
             }
 
             return "ERROR ERROR ERROR I AM A ROBOT";

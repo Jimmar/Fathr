@@ -9,7 +9,7 @@ public class Dad : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		GetComponent<RawImage>().texture = dadTextures[Random.Range(0,dadTextures.Length)];
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -17,6 +17,7 @@ public class Dad : MonoBehaviour {
 	}
 
 	public void DadLeaves(){
-		GetComponent<Animation>().Play();
+        GetComponent<Animation>().wrapMode = WrapMode.Once;
+        GetComponent<Animation>().Play();
 	}
 }

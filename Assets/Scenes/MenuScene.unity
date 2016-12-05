@@ -133,7 +133,7 @@ Prefab:
     - target: {fileID: 114885406945221656, guid: 545f8c208778e493ea33fbfe96fac945,
         type: 2}
       propertyPath: confusionRateOfIncrease
-      value: 0.1
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 114885406945221656, guid: 545f8c208778e493ea33fbfe96fac945,
         type: 2}
@@ -184,6 +184,11 @@ Prefab:
         type: 2}
       propertyPath: m_Volume
       value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114885406945221656, guid: 545f8c208778e493ea33fbfe96fac945,
+        type: 2}
+      propertyPath: confunderstansionMaxValue
+      value: 80
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 545f8c208778e493ea33fbfe96fac945, type: 2}

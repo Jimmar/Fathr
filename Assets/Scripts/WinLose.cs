@@ -11,7 +11,7 @@ public class WinLose : MonoBehaviour {
 
 	public void Win(){
 		GetComponent<RawImage>().texture = win;
-		GetComponent<Animation>().Play();
+        GetComponent<Animation>().Play();
 	}
 
 	public void Lose(){
