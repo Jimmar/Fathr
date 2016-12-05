@@ -83,11 +83,8 @@ public class SentanceFormer : MonoBehaviour {
 			outWordsList.Add(child.GetChild(0).GetComponentInChildren<Text>().text);
 			output+=child.GetChild(0).GetComponentInChildren<Text>().text+" ";
 		}
-		print (output);
 
 		database.DadResponder.Instance.SubmitPlayerInput(sentenceArray_s[sentanceIndex], outWordsList, out output);
-
-		print(output);
 
 		GameObject.FindObjectOfType<GameManager>().DadSays(output);
         this.NextSentance();
