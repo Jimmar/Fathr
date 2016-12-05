@@ -10,8 +10,8 @@ public class FloatingWord : MonoBehaviour {
 	void Start () {
 		original_y = transform.position.y;
 		shouldFloat = true;
-		float speed = Random.Range(1,4);
-		float amplitude = Random.Range(1,4);
+		speed = Random.Range(1,4);
+		amplitude = Random.Range(1,4);
 	}
 	
 	// Update is called once per frame
