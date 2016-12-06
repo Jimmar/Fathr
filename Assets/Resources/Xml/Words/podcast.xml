@@ -1,0 +1,18 @@
+<WordRoot>
+  <BaseWord word="podcast">
+    <LinkedWords>
+      <Link word="radio" weight="1.0"/>
+      <Link word="internet" weight="0.5"/>
+      <Link word="TV show" weight="0.2"/>
+      <Link word="comedy" weight="0.6"/>
+      <Link word="music" weight="0.1"/>
+      <Link word="your phone" weight="0.3"/>
+    </LinkedWords>
+    <Descriptors>
+      <Link word="interesting" weight="1.0"/>
+      <Link word="funny" weight="1.0"/>
+    </Descriptors>
+    <UnderstandingBase>0</UnderstandingBase>
+    <UnderstoodByDadType>0</UnderstoodByDadType>
+  </BaseWord>
+</WordRoot>

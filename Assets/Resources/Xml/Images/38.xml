@@ -1,9 +1,9 @@
 <WordRoot>
   <Image fileName="38_">
     <LinkedWords>
-      <Link word="Paul Blart Mall Cop" weight="1.0"/>
+      <Link word="Paul Blart Mall Cop" weight="0.8"/>
       <Link word="Shrek" weight="0.8"/>
-      <Link word="Bee Movie" weight="0.4"/>
+      <Link word="Bee Movie" weight="0.8"/>
     </LinkedWords>
     <Descriptors>
       <Link word="ironic" weight="1.0"/>

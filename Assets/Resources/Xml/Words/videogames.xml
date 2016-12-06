@@ -2,21 +2,22 @@
   <BaseWord word="video games">
     <LinkedWords>
       <Link word="entertainment" weight="1.0"/>
+      <Link word="board games" weight="0.8"/>
       <Link word="Mario" weight="0.5"/>
-      <Link word="Sonic the hedgehog" weight="0.5"/>
+      <Link word="Sonic" weight="0.5"/>
       <Link word="graphics" weight="0.7"/>
       <Link word="joystick" weight="0.6"/>
       <Link word="Nintendo" weight="0.4"/>
       <Link word="gamer" weight="0.6"/>
-      <Link word="Undertale" weight="0.5"/>
-      <Link word="Overwatch" weight="0.5"/>
-      <Link word="Pokemon" weight="0.5"/>
+      <Link word="Undertale" weight="0.2"/>
+      <Link word="Overwatch" weight="0.2"/>
+      <Link word="Pokemon" weight="0.2"/>
     </LinkedWords>
     <Descriptors>
       <Link word="fun" weight="1.0"/>
       <Link word="exciting" weight="0.5"/>
     </Descriptors>
     <UnderstandingBase>0.4</UnderstandingBase>
-    <UnderstoodByDadType>0.4</UnderstoodByDadType>
+    <UnderstoodByDadType>0</UnderstoodByDadType>
   </BaseWord>
 </WordRoot>

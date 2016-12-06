@@ -1,16 +1,16 @@
 <WordRoot>
   <BaseWord word="Batman">
     <LinkedWords>
-      <Link word="Black" weight="0.7"/>
+      <Link word="Superman" weight="0.7"/>
       <Link word="super hero" weight="1.0"/>
       <Link word="rich" weight="0.5"/>
       <Link word="comic" weight="0.7"/>
     </LinkedWords>
     <Descriptors>
-      <Link word="fun" weight="1.0"/>
+      <Link word="cool" weight="1.0"/>
       <Link word="exciting" weight="0.5"/>
     </Descriptors>
-    <UnderstandingBase>0.4</UnderstandingBase>
+    <UnderstandingBase>1</UnderstandingBase>
     <UnderstoodByDadType>0</UnderstoodByDadType>
   </BaseWord>
 </WordRoot>

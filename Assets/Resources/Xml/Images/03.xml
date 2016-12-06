@@ -1,11 +1,12 @@
 <WordRoot>
   <Image fileName="03_">
     <LinkedWords>
-      <Link word="meme" weight="0.3"/>
-      <Link word="animals" weight="0.1"/>
+      <Link word="meme" weight="0.6"/>
+      <Link word="animals" weight="0.6"/>
     </LinkedWords>
     <Descriptors>
       <Link word="funny" weight="1.0"/>
+      <Link word="cute" weight="0.5"/>
     </Descriptors>
   </Image>
 </WordRoot>

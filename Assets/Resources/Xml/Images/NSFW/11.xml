@@ -1,0 +1,13 @@
+<WordRoot>
+  <Image fileName="NSFW/11__">
+    <LinkedWords>
+      <Link word="Star Wars" weight="1.0"/>
+      <Link word="porn" weight="0.3"/>
+      <Link word="meme" weight="0.1"/>
+    </LinkedWords>
+    <Descriptors>
+      <Link word="sexy" weight="1.0"/>
+      <Link word="ironic" weight="1.0"/>
+    </Descriptors>
+  </Image>
+</WordRoot>

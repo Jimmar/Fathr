@@ -1,15 +1,14 @@
 <WordRoot>
   <BaseWord word="smoking">
     <LinkedWords>
-      <Link word="dangerous" weight="1.0"/>
+      <Link word="cigarettes" weight="1.0"/>
+      <Link word="danger" weight="1.0"/>
       <Link word="stupid" weight="0.6"/>
       <Link word="twisted" weight="0.5"/>
       <Link word="bad" weight="0.3"/>
-
     </LinkedWords>
     <Descriptors>
       <Link word="ironic" weight="1.0"/>
-      <Link word="funny" weight="1.0"/>
     </Descriptors>
     <UnderstandingBase>1</UnderstandingBase>
     <UnderstoodByDadType>0</UnderstoodByDadType>

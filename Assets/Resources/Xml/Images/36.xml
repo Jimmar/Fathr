@@ -1,9 +1,9 @@
 <WordRoot>
   <Image fileName="36">
     <LinkedWords>
-      <Link word="meme" weight="1.0"/>
-      <Link word="dabbing" weight="0.8"/>
-      <Link word="captcha" weight="0.4"/>
+      <Link word="meme" weight="0.6"/>
+      <Link word="dabbing" weight="0.6"/>
+      <Link word="captcha" weight="0.2"/>
     </LinkedWords>
     <Descriptors>
       <Link word="dumb" weight="1.0"/>

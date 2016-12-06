@@ -8,6 +8,6 @@
       <Link word="sexy" weight="1.0"/>
     </Descriptors>
     <UnderstandingBase>1</UnderstandingBase>
-    <UnderstoodByDadType>1</UnderstoodByDadType>
+    <UnderstoodByDadType>0</UnderstoodByDadType>
   </BaseWord>
 </WordRoot>

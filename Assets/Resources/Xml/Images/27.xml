@@ -2,7 +2,7 @@
   <Image fileName="27">
     <LinkedWords>
       <Link word="Pokemon" weight="0.8"/>
-      <Link word="Cool Games Inc" weight="0.3"/>
+      <Link word="CoolGames Inc" weight="0.3"/>
     </LinkedWords>
     <Descriptors>
       <Link word="funny" weight="1.0"/>

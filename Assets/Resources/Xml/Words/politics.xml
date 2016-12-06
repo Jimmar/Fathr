@@ -12,6 +12,7 @@
     <Descriptors>
       <Link word="silly" weight="1.0"/>
       <Link word="funny" weight="0.5"/>
+      <Link word="topical" weight="1.0"/>
     </Descriptors>
     <UnderstandingBase>1</UnderstandingBase>
     <UnderstoodByDadType>0</UnderstoodByDadType>

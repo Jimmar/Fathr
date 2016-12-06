@@ -1,13 +1,12 @@
 <WordRoot>
-  <BaseWord word="sherlock">
+  <BaseWord word="Sherlock">
     <LinkedWords>
-      <Link word="sherlock holmes" weight="0.9"/>
+      <Link word="Sherlock Holmes" weight="0.9"/>
       <Link word="mystery" weight="0.8"/>
-      <Link word="benedict cumberbatch" weight="0.6"/>
-      <Link word="british" weight="0.8"/>
+      <Link word="Benedict Cumberbatch" weight="0.6"/>
+      <Link word="British" weight="0.8"/>
       <Link word="adventure" weight="0.4"/>
       <Link word="detective" weight="0.2"/>
-
     </LinkedWords>
     <Descriptors>
       <Link word="exciting" weight="1.0"/>

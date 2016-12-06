@@ -7,9 +7,9 @@
       <Link word="ghosts" weight="0.9"/>
     </LinkedWords>
     <Descriptors>
-      <Link word="yummy" weight="1.0"/>
+      <Link word="scary" weight="1.0"/>
     </Descriptors>
-    <UnderstandingBase>.08</UnderstandingBase>
+    <UnderstandingBase>1</UnderstandingBase>
     <UnderstoodByDadType>0</UnderstoodByDadType>
   </BaseWord>
 </WordRoot>

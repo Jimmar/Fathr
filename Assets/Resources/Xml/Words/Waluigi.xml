@@ -1,14 +1,15 @@
 <WordRoot>
   <BaseWord word="Waluigi">
     <LinkedWords>
-      <Link word="Mario" weight="0.8"/>
-      <Link word="Nintendo" weight="0.7"/>
+      <Link word="Mario" weight="1.0"/>
+      <Link word="Nintendo" weight="1.0"/>
       <Link word="purple" weight="0.5"/>
       <Link word="villain" weight="0.5"/>
       <Link word="stomp" weight="0.4"/>
+      <Link word="sassy" weight="0.2"/>
     </LinkedWords>
     <Descriptors>
-      <Link word="funny" weight="1.0"/>
+      <Link word="funny" weight="0.5"/>
     </Descriptors>
     <UnderstandingBase>0</UnderstandingBase>
     <UnderstoodByDadType>0</UnderstoodByDadType>

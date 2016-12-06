@@ -3,11 +3,12 @@
     <LinkedWords>
       <Link word="animals" weight="1.0"/>
       <Link word="anthropomorphic" weight="1.0"/>
-      <Link word="Sonic the hedgehog" weight="0.3"/>
+      <Link word="Sonic" weight="0.3"/>
       <Link word="lifestyle" weight="0.5"/>
     </LinkedWords>
     <Descriptors>
       <Link word="sexy" weight="1.0"/>
+      <Link word="social" weight="0.5"/>
     </Descriptors>
     <UnderstandingBase>0</UnderstandingBase>
     <UnderstoodByDadType>0</UnderstoodByDadType>

@@ -1,8 +1,8 @@
 <WordRoot>
   <Image fileName="30_">
     <LinkedWords>
-      <Link word="Jojo's Bizarre Adventure" weight="1.0"/>
-      <Link word="Waluigi" weight="1.0"/>
+      <Link word="Jojo's Bizarre Adventure" weight="0.8"/>
+      <Link word="Waluigi" weight="0.8"/>
       <Link word="Anime" weight="0.3"/>
       <Link word="video games" weight="0.3"/>
     </LinkedWords>

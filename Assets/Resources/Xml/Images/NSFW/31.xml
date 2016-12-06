@@ -1,12 +1,12 @@
 <WordRoot>
-  <Image fileName="31">
+  <Image fileName="NSFW/31__">
     <LinkedWords>
       <Link word="furry" weight="1.0"/>
       <Link word="porn" weight="0.7"/>
-      <Link word="Sonic the hedgehog" weight="0.2"/>
+      <Link word="animals" weight="0.2"/>
     </LinkedWords>
     <Descriptors>
-      <Link word="sweet" weight="1.0"/>
+      <Link word="sexy" weight="1.0"/>
     </Descriptors>
   </Image>
 </WordRoot>

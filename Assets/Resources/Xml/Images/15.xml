@@ -1,7 +1,7 @@
 <WordRoot>
   <Image fileName="15">
     <LinkedWords>
-      <Link word="sonic" weight=".8"/>
+      <Link word="Sonic" weight="0.8"/>
       <Link word="meme" weight="0.6"/>
       <Link word="smoking" weight="0.1"/>
     </LinkedWords>

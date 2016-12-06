@@ -2,7 +2,7 @@
   <BaseWord word="Cars">
     <LinkedWords>
       <Link word="cartoon" weight="1.0"/>
-      <Link word="cars" weight="1.0"/>
+      <Link word="trucks" weight="1.0"/>
       <Link word="Disney" weight="0.8"/>
       <Link word="movie" weight="0.5"/>
     </LinkedWords>
@@ -10,7 +10,7 @@
       <Link word="funny" weight="1.0"/>
       <Link word="cute" weight="1.0"/>
     </Descriptors>
-    <UnderstandingBase>0.5</UnderstandingBase>
-    <UnderstoodByDadType>0.5</UnderstoodByDadType>
+    <UnderstandingBase>0.1</UnderstandingBase>
+    <UnderstoodByDadType>0</UnderstoodByDadType>
   </BaseWord>
 </WordRoot>

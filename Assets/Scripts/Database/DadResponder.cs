@@ -128,7 +128,8 @@ using System.Linq;
         private IEnumerator WaitForNewPhrase()
         {
             yield return new UnityEngine.WaitForSeconds(2.1f);
-            UnityEngine.GameObject.FindObjectOfType<GameManager>().DadSays("Now what's this one?", false);
+            if (!Game.Instance.isGameOver)
+                UnityEngine.GameObject.FindObjectOfType<GameManager>().DadSays("Now what's this one?", false);
         }
 
         #region Singleton management

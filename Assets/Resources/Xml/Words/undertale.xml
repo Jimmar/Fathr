@@ -1,18 +1,17 @@
 <WordRoot>
-  <BaseWord word="undertale">
+  <BaseWord word="Undertale">
     <LinkedWords>
-      <Link word="skeletons" weight="0.9"/>
-      <Link word="cartoon" weight="0.7"/>
-      <Link word="video games" weight="0.6"/>
-      <Link word="adventure" weight="0.6"/>
-      <Link word="friends" weight="0.3"/>
+      <Link word="video games" weight="1.0"/>
+      <Link word="skeletons" weight="0.8"/>
+      <Link word="cartoon" weight="0.6"/>
+      <Link word="adventure" weight="0.4"/>
+      <Link word="friends" weight="0.6"/>
       <Link word="gay" weight="0.2"/>
-
-
     </LinkedWords>
     <Descriptors>
       <Link word="fun" weight="1.0"/>
       <Link word="cute" weight="1.0"/>
+      <Link word="complex" weight="1.0"/>
     </Descriptors>
     <UnderstandingBase>0</UnderstandingBase>
     <UnderstoodByDadType>0</UnderstoodByDadType>

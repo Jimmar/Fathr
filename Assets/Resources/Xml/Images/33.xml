@@ -1,10 +1,12 @@
 <WordRoot>
   <Image fileName="33__">
     <LinkedWords>
-      <Link word="Pokemon" weight="1.0"/>
+      <Link word="Pokemon" weight="0.7"/>
+      <Link word="fashion" weight="0.4"/>
     </LinkedWords>
     <Descriptors>
       <Link word="dumb" weight="1.0"/>
+      <Link word="silly" weight="0.5"/>
     </Descriptors>
   </Image>
 </WordRoot>

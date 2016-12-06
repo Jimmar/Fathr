@@ -15,13 +15,15 @@
     {
         private const string wordFilesResourcesPath_c = "Xml/Words";
         private const string imageFilesResourcesPath_c = "Xml/Images";
+        private const string imageFilesNSFWResourcesPath_c = "Xml/Images/NSFW";
 
         private string wordFilesResourcesPath;
         private string imageFilesResourcesPath;
-        private string imageFilesActualPath { get { return Path.Combine(Application.dataPath, "Resources/" + imageFilesResourcesPath_c); } }
+        private string imageFilesNSFWResourcesPath;
 
         private Dictionary<string, Word> wordDatabase; // Keys are the words.
         private List<Image> imageDatabase;
+        private List<Image> imageDatabaseNSFW;
         private List<string> fakeWordDatabase; // Usable for all words.
 
         #region Member classes
@@ -108,12 +110,15 @@
             instance = new Database();
             instance.wordDatabase = new Dictionary<string, Word>();
             instance.imageDatabase = new List<Image>();
+            instance.imageDatabaseNSFW = new List<Image>();
             instance.fakeWordDatabase = new List<string>();
             instance.wordFilesResourcesPath = wordDirPath ?? wordFilesResourcesPath_c;
             instance.imageFilesResourcesPath = imageDirPath ?? imageFilesResourcesPath_c;
+            instance.imageFilesNSFWResourcesPath = imageFilesNSFWResourcesPath_c; // The null options were always only for tests...
 
             instance.LoadXmlWords(Path.Combine(Application.dataPath, "Resources/" + instance.wordFilesResourcesPath));
-            instance.LoadXmlImages(Path.Combine(Application.dataPath, "Resources/" + instance.imageFilesResourcesPath));
+            instance.LoadXmlImages(Path.Combine(Application.dataPath, "Resources/" + instance.imageFilesResourcesPath), instance.imageDatabase);
+            instance.LoadXmlImages(Path.Combine(Application.dataPath, "Resources/" + instance.imageFilesNSFWResourcesPath), instance.imageDatabaseNSFW);
         }
 
         /// <summary>
@@ -142,7 +147,8 @@
         /// Loads in all image XML files. Mostly a copy-paste of LoadXmlWords.
         /// </summary>
         /// <param name="containingDirectoryPath">Absolute path, using Application.dataPath.</param
-        private void LoadXmlImages(string containingDirectoryPath)
+        /// <param name="imageDatabase">Which image database to which to load the images.</param>
+        private void LoadXmlImages(string containingDirectoryPath, List<Image> imageDatabase)
         {
             DirectoryInfo containingDirectoryInfo = new DirectoryInfo(containingDirectoryPath);
             FileInfo[] xmlFiles = containingDirectoryInfo.GetFiles("*.xml");
@@ -150,7 +156,7 @@
             {
                 IList<Image> imagesFromFile = database.XmlLoader.LoadSubXml<Image>(xmlFile.FullName, "Image");
                 for (int i = 0; i < imagesFromFile.Count; i++) {
-                    this.imageDatabase.Add(imagesFromFile[i]);
+                    imageDatabase.Add(imagesFromFile[i]);
                 }
             }
         }
@@ -212,7 +218,13 @@
             int timeout = 50;
             while (timeout > 0)
             {
-                Image image = this.imageDatabase[random.Random.Range(0, this.imageDatabase.Count)];
+                Image image;
+                if (Game.IsNSFWOn) {
+                    List<Image> combinedImages = this.imageDatabase.Concat(this.imageDatabaseNSFW).ToList();
+                    image = combinedImages[random.Random.Range(0, combinedImages.Count)];
+                } else {
+                    image = this.imageDatabase[random.Random.Range(0, this.imageDatabase.Count)];
+                }
                 if (!image.hasBeenUsedAlready)
                 {
                     image.hasBeenUsedAlready = true;

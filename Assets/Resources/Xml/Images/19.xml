@@ -1,8 +1,9 @@
 <WordRoot>
   <Image fileName="19">
     <LinkedWords>
-      <Link word="overwatch" weight="0.5"/>
-      <Link word="Shrek" weight="1.0"/>
+      <Link word="Overwatch" weight="0.3"/>
+      <Link word="Shrek" weight="0.8"/>
+      <Link word="dad joke" weight="0.4"/>
     </LinkedWords>
     <Descriptors>
       <Link word="funny" weight="1.0"/>

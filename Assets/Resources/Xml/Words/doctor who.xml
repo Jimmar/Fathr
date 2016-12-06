@@ -2,12 +2,11 @@
   <BaseWord word="Doctor Who">
     <LinkedWords>
       <Link word="time travel" weight="0.9"/>
-      <Link word="sci fi" weight="0.8"/>
+      <Link word="sci-fi" weight="0.8"/>
       <Link word="police box" weight="0.6"/>
       <Link word="british" weight="0.8"/>
       <Link word="adventure" weight="0.4"/>
       <Link word="space" weight="0.2"/>
-
     </LinkedWords>
     <Descriptors>
       <Link word="old" weight="1.0"/>

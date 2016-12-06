@@ -3,6 +3,7 @@
     <LinkedWords>
       <Link word="bad movie" weight="1.0"/>
       <Link word="comedy" weight="1.0"/>
+      <Link word="movie" weight="0.8"/>
       <Link word="shopping" weight="0.5"/>
       <Link word="heist" weight="0.7"/>
       <Link word="fat guy" weight="0.5"/>
@@ -13,6 +14,6 @@
       <Link word="sad" weight="1.0"/>
     </Descriptors>
     <UnderstandingBase>0.2</UnderstandingBase>
-    <UnderstoodByDadType>0.2</UnderstoodByDadType>
+    <UnderstoodByDadType>0</UnderstoodByDadType>
   </BaseWord>
 </WordRoot>

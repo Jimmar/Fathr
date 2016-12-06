@@ -1,11 +1,11 @@
 <WordRoot>
-  <Image fileName="34">
+  <Image fileName="34_">
     <LinkedWords>
       <Link word="Cars" weight="0.7"/>
       <Link word="Overwatch" weight="0.5"/>
     </LinkedWords>
     <Descriptors>
-      <Link word="dumb" weight="8.0"/>
+      <Link word="dumb" weight="1"/>
     </Descriptors>
   </Image>
 </WordRoot>

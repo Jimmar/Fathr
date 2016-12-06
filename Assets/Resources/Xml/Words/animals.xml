@@ -1,14 +1,18 @@
 <WordRoot>
   <BaseWord word="animals">
     <LinkedWords>
-      <Link word="fluffy" weight="0.9"/>
+      <Link word="fluffy" weight="0.6"/>
+      <Link word="animals" weight="1.0"/>
       <Link word="furry" weight="0.2"/>
-      <Link word="beast" weight="1.0"/>
+      <Link word="beast" weight="0.6"/>
+      <Link word="dinosaur" weight="0.3"/>
+      <Link word="pig" weight="0.3"/>
     </LinkedWords>
     <Descriptors>
       <Link word="cute" weight="1.0"/>
+      <Link word="funny" weight="1.0"/>
     </Descriptors>
-    <UnderstandingBase>.09</UnderstandingBase>
+    <UnderstandingBase>1</UnderstandingBase>
     <UnderstoodByDadType>0</UnderstoodByDadType>
   </BaseWord>
 </WordRoot>

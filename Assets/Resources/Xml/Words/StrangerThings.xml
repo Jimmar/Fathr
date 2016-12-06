@@ -8,9 +8,9 @@
     </LinkedWords>
     <Descriptors>
       <Link word="cool" weight="1.0"/>
-      <Link word="exciting" weight="0.5"/>
+      <Link word="nostalgic" weight="0.5"/>
     </Descriptors>
-    <UnderstandingBase>0.5</UnderstandingBase>
+    <UnderstandingBase>0.1</UnderstandingBase>
     <UnderstoodByDadType>0</UnderstoodByDadType>
   </BaseWord>
 </WordRoot>

@@ -1,22 +1,21 @@
 <WordRoot>
   <BaseWord word="cartoon">
     <LinkedWords>
+      <Link word="cartoon" weight="1.0"/>
       <Link word="animation" weight="0.9"/>
-      <Link word="disney" weight="0.7"/>
+      <Link word="Disney" weight="0.7"/>
       <Link word="kids" weight="0.6"/>
-      <Link word="simpsons" weight="0.6"/>
+      <Link word="Simpsons" weight="0.6"/>
       <Link word="Steven Universe" weight="0.4"/>
-      <Link word="mickey mouse" weight="0.2"/>
+      <Link word="Mickey Mouse" weight="0.2"/>
       <Link word="art" weight="0.6"/>
-      <Link word="anime" weight="0.3"/>
-
-
+      <Link word="Anime" weight="0.3"/>
     </LinkedWords>
     <Descriptors>
       <Link word="fun" weight="1.0"/>
       <Link word="entertaining" weight="1.0"/>
     </Descriptors>
-    <UnderstandingBase>.6</UnderstandingBase>
+    <UnderstandingBase>1</UnderstandingBase>
     <UnderstoodByDadType>0</UnderstoodByDadType>
   </BaseWord>
 </WordRoot>

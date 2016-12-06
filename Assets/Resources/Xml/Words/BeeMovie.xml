@@ -2,10 +2,11 @@
   <BaseWord word="Bee Movie">
     <LinkedWords>
       <Link word="cartoon" weight="1.0"/>
-      <Link word="bee" weight="1.0"/>
+      <Link word="bee" weight="0.5"/>
       <Link word="Cars" weight="0.3"/>
-      <Link word="Seinfeld" weight="0.2"/>
+      <Link word="Seinfeld" weight="0.8"/>
       <Link word="movie" weight="0.5"/>
+      <Link word="Pixar" weight="0.1"/>
     </LinkedWords>
     <Descriptors>
       <Link word="dumb" weight="1.0"/>

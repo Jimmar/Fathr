@@ -18,6 +18,8 @@ public class Game : MonoBehaviour
     [SerializeField]
     private MusicManager musicManager;
 
+    public static bool IsNSFWOn = false; // So, oops, the menu scene doesn't have a Game object, but the NSFW toggle is there, so...
+
     public bool isGameOver { get { return this.confusion + this.understanding >= this.confunderstansionMaxValue; } }
     private bool hasEnded = false;
     
@@ -71,9 +73,9 @@ public class Game : MonoBehaviour
             this.EndGame();
         }
         // Dumb check for music.
-        if (this.understanding > this.confusion * 2 && this.understanding > 20) {
+        if (this.understanding > this.confusion * 1.5 && this.understanding > 10) {
             this.musicManager.Understanding();
-        } else if (this.understanding < this.confusion * 0.5 && this.confusion > 20) {
+        } else if (this.understanding < this.confusion * 0.667 && this.confusion > 10) {
             this.musicManager.Confused();
         } else {
             this.musicManager.Natural();

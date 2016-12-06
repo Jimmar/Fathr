@@ -2,8 +2,8 @@
   <BaseWord word="Nintendo">
     <LinkedWords>
       <Link word="video games" weight="1.0"/>
-      <Link word="Mario" weight="0.9"/>
-      <Link word="Waluigi" weight="0.9"/>
+      <Link word="Mario" weight="1.0"/>
+      <Link word="Waluigi" weight="0.2"/>
       <Link word="Nintendo" weight="1.0"/>
       <Link word="Sonic" weight="0.1"/>
     </LinkedWords>

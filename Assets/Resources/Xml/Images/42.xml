@@ -3,6 +3,7 @@
     <LinkedWords>
       <Link word="Undertale" weight="0.5"/>
       <Link word="video game" weight="0.5"/>
+      <Link word="skeleton" weight="0.3"/>
       </LinkedWords>
     <Descriptors>
       <Link word="fun" weight="1.0"/>

@@ -6,6 +6,7 @@
     </LinkedWords>
     <Descriptors>
       <Link word="funny" weight="1.0"/>
+      <Link word="topical" weight="1.0"/>
     </Descriptors>
   </Image>
 </WordRoot>

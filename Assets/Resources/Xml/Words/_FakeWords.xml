@@ -37,6 +37,7 @@
       <Link word="colorful" weight="0"/>
       <Link word="inspirational" weight="0"/>
       <Link word="nostalgic" weight="0"/>
+      <Link word="dumb" weight="0"/>
     </Descriptors>
   </BaseWord>
 </WordRoot>

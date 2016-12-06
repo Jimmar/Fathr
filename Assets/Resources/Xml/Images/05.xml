@@ -1,7 +1,7 @@
 <WordRoot>
   <Image fileName="05_">
     <LinkedWords>
-      <Link word="Stranger Things" weight="1.0"/>
+      <Link word="Stranger Things" weight="0.6"/>
       <Link word="breakfast" weight="0.2"/>
     </LinkedWords>
     <Descriptors>

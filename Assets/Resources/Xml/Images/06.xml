@@ -1,12 +1,12 @@
 <WordRoot>
   <Image fileName="06_">
     <LinkedWords>
-      <Link word="Supernatural" weight="0.6"/>
-      <Link word="Hunting" weight="0.6"/>
+      <Link word="Supernatural" weight="1.0"/>
       <Link word="bromance" weight="0.6"/>
     </LinkedWords>
     <Descriptors>
       <Link word="funny" weight="1.0"/>
+      <Link word="social" weight="1.0"/>
     </Descriptors>
   </Image>
 </WordRoot>

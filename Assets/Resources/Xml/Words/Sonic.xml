@@ -2,8 +2,8 @@
   <BaseWord word="Sonic">
     <LinkedWords>
       <Link word="video games" weight="1.0"/>
-      <Link word="nintendo" weight="0.9"/>
-      <Link word="hedgehogs" weight="0.5"/>
+      <Link word="Nintendo" weight="0.9"/>
+      <Link word="hedgehog" weight="0.5"/>
       <Link word="fast" weight="0.8"/>
       <Link word="blue" weight="0.5"/>
       <Link word="Japanese" weight="0.3"/>
@@ -13,7 +13,7 @@
       <Link word="fun" weight="1.0"/>
       <Link word="exciting" weight="0.5"/>
     </Descriptors>
-    <UnderstandingBase>0.4</UnderstandingBase>
+    <UnderstandingBase>0.2</UnderstandingBase>
     <UnderstoodByDadType>0</UnderstoodByDadType>
   </BaseWord>
 </WordRoot>

@@ -14,7 +14,7 @@
       <Link word="fun" weight="1.0"/>
       <Link word="cute" weight="0.8"/>
     </Descriptors>
-    <UnderstandingBase>.6</UnderstandingBase>
-    <UnderstoodByDadType>0.6</UnderstoodByDadType>
+    <UnderstandingBase>0</UnderstandingBase>
+    <UnderstoodByDadType>0</UnderstoodByDadType>
   </BaseWord>
 </WordRoot>

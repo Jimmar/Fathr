@@ -1,5 +1,5 @@
 <WordRoot>
-  <BaseWord word="Cool Games Inc">
+  <BaseWord word="CoolGames Inc">
     <LinkedWords>
       <Link word="podcast" weight="1.0"/>
       <Link word="video games" weight="1.0"/>
@@ -10,7 +10,7 @@
     <Descriptors>
       <Link word="funny" weight="1.0"/>
     </Descriptors>
-    <UnderstandingBase>0.2</UnderstandingBase>
-    <UnderstoodByDadType>0.2</UnderstoodByDadType>
+    <UnderstandingBase>0</UnderstandingBase>
+    <UnderstoodByDadType>0</UnderstoodByDadType>
   </BaseWord>
 </WordRoot>
